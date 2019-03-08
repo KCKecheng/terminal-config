@@ -1,0 +1,606 @@
+" ====== vim-plug configuration ======
+" Refer to https://github.com/junegunn/vim-plug for details
+call plug#begin('~/.vim/plugged')
+
+" ------ Add personal plugins here -------
+" *** Common Plugins ***
+" Basic
+Plug 'scrooloose/nerdcommenter'
+Plug 'simeji/winresizer'
+Plug 'mbbill/undotree'
+" Search and navigate
+Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'kshenoy/vim-signature'
+Plug 'haya14busa/incsearch.vim'
+" Format
+Plug 'junegunn/vim-easy-align'
+Plug 'Chiel92/vim-autoformat'
+Plug 'ntpeters/vim-better-whitespace'
+" Surrounding auto complemete and modify
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+" Theme
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+Plug 'crusoexia/vim-monokai'
+Plug 'fatih/molokai'
+Plug 'altercation/vim-colors-solarized'
+" Coding
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'Yggdroot/indentLine'
+Plug 'brookhong/cscope.vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'myint/syntastic-extras'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Code snippets - ultisnips and vim-snippets need to be enabled together
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" *** Lanaguage Specific Plugins ***
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+" Ansible Plugin
+Plug 'pearofducks/ansible-vim'
+" React JSX/javascript plugin
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
+" HTML/XML/Jinja Plugin
+" Plug 'alvan/vim-closetag'
+" Plug 'Valloric/MatchTagAlways'
+" Python pydoc - triggered by K(shift + k)
+Plug 'fs111/pydoc.vim'
+" PowerShell
+Plug 'pprovost/vim-ps1'
+
+call plug#end()
+filetype plugin indent on
+
+" ====== Plugin Configuration ======
+" *** nerdcommenter ***
+" Help - '\' is the default leader key
+"   [count]<Leader>cc - Comment out the current line or text selected in visual mode
+"   [count]<leader>c<space> - Toggles the comment state of the selected line(s)
+"   [count]<leader>cu - Uncomments the selected line(s)
+" Options
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+
+" *** tagbar ***
+" Options
+" Ansible Support
+let g:tagbar_type_yaml = {
+\ 'ctagstype' : 'ansible',
+\ 'kinds' : [
+  \ 't:tasks'
+\ ],
+\ 'sort' : 0,
+\ }
+" reStructuredText Support
+let g:tagbar_type_rst = {
+\ 'ctagstype': 'rst',
+\ 'ctagsbin' : '/usr/bin/rst2ctags',
+\ 'ctagsargs' : '-f - --sort=yes',
+\ 'kinds' : [
+    \ 's:sections',
+    \ 'i:images'
+\ ],
+\ 'sro' : '|',
+\ 'kind2scope' : {
+    \ 's' : 'section',
+\ },
+\ 'sort': 0,
+\ }
+" Markdown Support(need ctags configuration(.ctags))
+let g:tagbar_type_markdown = {
+\ 'ctagstype': 'markdown',
+\ 'ctagsbin' : '/usr/local/bin/markdown2ctags.py',
+\ 'ctagsargs' : '-f - --sort=yes',
+\ 'kinds' : [
+    \ 's:sections',
+    \ 'i:images'
+\ ],
+\ 'sro' : '|',
+\ 'kind2scope' : {
+    \ 's' : 'section',
+\ },
+\ 'sort': 0,
+\ }
+" Key map
+noremap <C-t> :Tagbar<CR>
+
+" *** fzf.vim ***
+" Customized commands
+" ------
+" Command for git grep
+" To search the whole git repository; To search the current directory, use :Rg
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+" Key map
+" ------
+" Windows list
+nnoremap <leader>w :Windows<cr>
+" Buffer list
+nnoremap <leader>b :Buffers<cr>
+" Most recent files list
+nnoremap <leader>r :History<cr>
+" Search file names for current git repository
+nnoremap ff :GFiles<cr>
+" Search file names for current directory
+nnoremap fc :Files<cr>
+" Search file contents for current git repository
+nnoremap <leader>G :GGrep<cr>
+" Search file contents for current directory(need ripgrep)
+nnoremap <leader>g :Rg<cr>
+" Search lines for all loaded buffers
+nnoremap <leader>L :Lines<cr>
+" Search lines for current buffer
+nnoremap <leader>l :BLines<cr>
+
+" *** vim-airline ***
+" Options
+let g:airline_theme = 'luna'
+let g:airline#extensions#tabline#enabled = 1
+set laststatus=2
+
+" *** undotree ***
+" Options
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffCommand = "diff -u"
+" Key map
+nnoremap <silent><F5> :UndotreeToggle<CR>
+
+" *** incsearch ***
+" Key map
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+
+" *** vim-easymotion ***
+" Refer to https://github.com/easymotion/vim-easymotion
+" Default leader key \
+" Help - :help easymotion
+" Options
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1  " Case insensitive
+" Key map
+" JK motions: Line motions(consider using vim builint 'set relativenum')
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+" Multiple characters search motion
+nmap s <Plug>(easymotion-sn)
+" nmap t <Plug>(easymotion-bd-tn)
+" Word motion within current line
+" nmap <leader>w <Plug>(easymotion-bd-wl)
+" nmap <leader>e <Plug>(easymotion-bd-el)
+" Word motion
+nmap <leader><leader>w <Plug>(easymotion-bd-w)
+nmap <leader><leader>e <Plug>(easymotion-bd-e)
+
+" *** indentLine ***
+" :IndentLinesToggle - disable/enable the plugin
+" Options
+let g:indentLine_enabled = 0
+" Key map
+" nnoremap <silent><F4> :IndentLinesToggle <CR>
+function! IndentLine_MToggle()
+  :IndentLinesToggle
+  :LeadingSpaceToggle
+endfunc
+nnoremap <silent><F4> :call IndentLine_MToggle() <CR>
+
+" ***  vim-colors-solarized ***
+" Turn on syntax highlight before using a color scheme
+syntax on
+" To use solarized color scheme under terminal(such as xterm, xterm-256color, screen-256color), use below commands:
+let g:solarized_termcolors=256
+" set background=light
+set background=dark
+
+" *** gruvbox ***
+" Disable underline text
+let g:gruvbox_underline=0
+
+" *** cscope ***
+" Options
+let g:cscope_silent=1
+" '\' is the default leader key
+" Key map
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+
+" *** vim-easy-align ***
+" Help - :help EasyAlign
+"
+" Leverage predefined alignment rules/delimeters (<Space>, =, :, ., |, &, #, and ,):
+" - Select block in visual mode (v/Shift + v)
+" - ga
+" - Enter to cycle among left/cener/right alignment
+" - Input the predefined delimiter, such as =, :, etc.
+" - Examples:
+"     1<delimeter> or <delimeter> : around the 1st occurrences
+"     2<delimeter>                : around the 2nd occurences
+"     -1<delimeter>               : aroudn the last occurences
+"     ...
+"     *<delimeter>                : atound all occurences
+"     **<delimeter>               : Left/Right alternating alignment around all occurrences
+"
+" Leverage regular expression for any pattern:
+" - Select block in visual mode (v/Shift + v)
+" - :'<,'>EasyAlign [modifier, such as * or **]/<regular expression pattern>/
+" - Examples:
+"     :'<,'>EasyAlign */<regular expression pattern>/
+"     :'<,'>EasyAlign **/<regular expression pattern>/
+"
+" Key map
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" *** syntastic ***
+" Help
+" - :help syntastic
+" - :help syntastic-checkers
+" - :help syntastic-commands
+" Notes: code checker needs to be installed(refer to :help syntastic-checkers)
+" Options
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_mode = "passive"
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs=0
+" Use flake8 instead of the default pylint which reports too many information
+let g:syntastic_python_checkers = ['flake8']
+" Key map
+nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
+
+" *** vim-signature ***
+" Refer to https://github.com/kshenoy/vim-signature
+" Most frequently used keys
+" mx  - Toggle mark 'x'
+" dmx - Remove makr 'x'
+" m,  - Place the next available mark
+" m.  - If there is no mark, place the next available mark, remove otherwise
+" ]`  - Jump to next mark
+" ]'  - Jump to previous mark
+" m/  - Open location list and display marks from current buffer
+" m-  - Delete all marks from the current line
+" m<Space> - Delete all marks from the current buffer
+
+" *** SirVer/ultisnips and honza/vim-snippets ***
+" 0 - Still open the preview window
+" 1 - Close the preview window
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 0
+" By default, YCM use tab, which is conflicted with ultisnips. Below setting
+" disable tab for YCM.
+let g:ycm_key_list_select_completion=['<Down>']
+let g:ycm_key_list_previous_completion=['<Up>']
+let g:UltiSnipsExpandTrigger='<tab>'
+
+" *** simeji/winresizer ***
+" Key map
+" Ctrl + E, then h/j/k/l
+
+" *** jiangmiao/auto-pairs ***
+" Key map
+let g:AutoPairsShortcutToggle = '<F6>'
+
+" *** tpope/vim-surround ***
+" Key map
+" ds/cs/ys
+" Help :help surround
+
+" *** ansible-vim ***
+" Notes: 'set ft=yaml.ansible' if file type is not recognized automatically
+" Options
+let g:ansible_unindent_after_newline = 1
+let g:ansible_attribute_highlight = "ab"
+let g:ansible_name_highlight = 'b'
+let g:ansible_extra_keywords_highlight = 1
+let g:ansible_normal_keywords_highlight = 'Constant'
+let g:ansible_with_keywords_highlight = 'Constant'
+au BufRead,BufNewFile *.yml,*.yaml set filetype=yaml.ansible
+
+" *** vim-javascript ***
+" Options
+let g:javascript_plugin_flow = 1
+
+" *** vim-jsx ***
+" Options
+" let g:jsx_ext_required = 0
+
+" *** vim-autoformat ***
+" Options
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+" Use black for python format(the default is autopep8):
+" Note: black needs to be installed(pip install --user black)
+let g:formatters_python = ['black']
+
+" Key map
+nnoremap <silent><F9> :Autoformat<CR>
+
+" *** vim-go ***
+" Options
+" let g:go_bin_path = expand($HOME)."/.vim/go/bin"
+" Leverage tagbar globally
+let g:go_def_mapping_enabled=0
+let g:go_list_type = "quickfix"
+
+" ====== Personal Key Map(not plugin related) ======
+"
+" *** Mouse Toggle ***
+" Map F3 to toggle mouse mode support
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'n'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=n
+    endif
+endfunc
+nnoremap <silent><F3> :call ToggleMouse()<CR>
+" Turn on mouse in normal mode by default
+set mouse=n
+
+" *** Paste Toggle ***
+" Map F7 to toggle paste
+function! TogglePaste()
+    " check if paste is enabled
+    if &paste == '1'
+        " disable paste
+        set nopaste
+    else
+        " enable paste
+        set paste
+    endif
+endfunc
+nnoremap <silent><F7> :call TogglePaste()<CR>
+" Disable paste as inital status
+set nopaste
+
+" *** Buffer options ***
+" Ignore quickfix window when cyclying buffers
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+nnoremap gd :bd<CR>
+
+" *** ESC remap ***
+" Map jj as pressing ESC under insert mode(ESC still works)
+inoremap jj <Esc>
+
+" *** view/split navigation ***
+" nnoremap ;a <C-w>h
+" nnoremap ;d <C-w>l
+" nnoremap ;w <C-w>k
+" nnoremap ;s <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-o> <C-w>w
+
+" *** horizon/vertical split ***
+" Split with current buffer
+" nnoremap <leader><leader>s <C-w>s
+" nnoremap <leader><leader>v <C-w>v
+
+" Split with new buffer
+" nnoremap <leader><leader>s :new<CR>
+" nnoremap <leader><leader>v :vnew<CR>
+nnoremap <leader><leader>s :Hex<CR>
+nnoremap <leader><leader>v :Vex<CR>
+
+" *** Close Buffer ***
+" Check if any preview-window exists
+" function! PreviewWindowExisted()
+"   for nr in range(1, winnr('$'))
+"     if getwinvar(nr, "&pvw") == 1
+"       return 1
+"     endif
+"   endfor
+" endfunc
+" Close quickfix/location-list if there is, otherwise, close the current buffer
+function! CloseBuffer()
+  " Get all loaded buffers
+  let buffers = filter(range(1, bufnr('$')), 'bufloaded(v:val)')
+  " Check if quickfix/location-list exists
+  let flag = 0
+  for i in buffers
+    let btype = getbufvar(i, '&buftype')
+    if btype == 'quickfix' || btype == 'location-list'
+      let flag = 1
+      break
+    endif
+  endfor
+  " If quickfix/location-list exists, close them
+  if flag == 1
+    exec 'lclose | cclose'
+  " Otherwise, close the current buffer
+  else
+    " Number of buffers exist
+    let bnum = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    " When there is only one buffer, quit vim
+    if bnum == 1
+      exec 'quit'
+    " Otherwise, delete the current buffer
+    else
+      exec 'bd'
+    endif
+  endif
+endfunc
+
+" Map shortcut qq to call the function
+nnoremap qq :call CloseBuffer()<CR>
+
+" Clear the last highlight
+" nnoremap <silent><F2> :noh <CR>
+" Toggle hlsearch
+nnoremap <silent><F2> :set hlsearch! <CR>
+
+" Invoke the help document for fzf-vim-command
+nnoremap <silent><F10> :help fzf-vim-commands<CR>
+" Invoke the help document for function key maps
+nnoremap <silent><F11> :help ckeys-funckeys<CR>
+" Invoke the help document for key maps
+nnoremap <silent><F12> :help ckeys<CR>
+
+" ====== Frequently used options(not plugin related) ======
+"
+" Automatically adjust quickfix window size, refer to
+" http://vim.wikia.com/wiki/Automatically_fitting_a_quickfix_window_height
+au FileType qf call AdjustWindowHeight(1, 30)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+" *** Additonal file auto generation ***
+" Disable backup and undo file generation
+" set nobackup
+" set nowritebackup
+" set noundofile
+
+" *** Automatically backup ***
+if isdirectory('~/.vim/backup') == 0
+  :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+endif
+
+" set backupcopy=yes
+" set writebackup
+set backup
+set backupdir=~/.vim/backup//
+au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
+
+" *** Persistent undo ***
+if isdirectory('~/.vim/undo') == 0
+  :silent !mkdir -p ~/.vim/undo >/dev/null 2>&1
+endif
+
+set undodir=~/.vim/undo//
+set undofile
+
+" *** swp file location ***
+if isdirectory('~/.vim/swap') == 0
+  :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+endif
+
+set directory=~/.vim/swap//
+
+" *** split view to right/bottom ***
+set splitbelow
+set splitright
+
+" *** viminfo ***
+" Persist info into viminfo. Refer to :help viminfo
+" This is set as a prerequisite to make some plugins work, e.g., vim
+" bookmarks will persist(vim-signature will work after vim exit and reope)
+" Explanations:
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo'
+
+" *** Restore cursor to previous position ***
+" This depends on viminfo configured above, refer to
+" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
+" *** quote/special characters(such as marks in MD, RST) auto hide ***
+" Disable double quote auto hide in json file editing
+" set conceallevel=0
+
+" *** Colors ***
+" Terminal colors
+set t_Co=256
+
+" Terminal colorscheme
+" colorscheme desert
+" colorscheme monokai
+" colorscheme solarized
+colorscheme gruvbox
+
+" *** Line/Column highlight ***
+" Highlight current line and cursor for easy alignment
+set cursorline
+set cursorcolumn
+
+" Source code in one line should not be longer than 80 x characters(git BP)
+set colorcolumn=80
+
+" *** Tab expansion ***
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+" *** command-line completion ***
+set wildmenu
+set wildmode=list:longest,full
+
+" *** Do not fold by default(only fold after nested for X times)
+set foldlevel=5
+
+" *** net-rw ***
+" let g:netrw_browse_split = 4
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+" let g:netrw_list_hide = netrw_gitignore#Hide() . '.*\.swp,.*\.pyc,.*\.retry'
+let g:netrw_list_hide = '.*\.swp,.*\.pyc,.*\.retry'
+let g:netrw_hide = 1 "Do not list files defined by netrw_list_hide
+" Do not save a directory changes
+" autocmd FileType netrw setl bufhidden=delete
+autocmd FileType netrw setl bufhidden=wipe
+
+" *** MISC options ***
+" set ai
+" set hlsearch
+set encoding=utf-8
+set number relativenumber
+set ic
+set nowrap

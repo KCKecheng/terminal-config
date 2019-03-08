@@ -1,0 +1,167 @@
+*ckeys.txt*
+*ckeys*
+===============================================================================
+#                                                                             #
+#                   Plugin and Customized Key Maps                            #
+#                                                                             #
+===============================================================================
+KEY MAPS~
+
+        function keys  ............   |ckeys-funckeys|
+        nerdcommenter  ............   |ckeys-nerdcommenter|
+        tagbar         ............   |ckeys-tagbar|
+        fzf-vim        ............   |ckeys-fzf|
+        undotree       ............   |ckeys-undotree|
+        incsearch      ............   |ckeys-incsearch|
+        vim-easymotion ............   |ckeys-easymotion|
+        indentLine     ............   |ckeys-indentLine|
+        cscope         ............   |ckeys-cscope|
+        vim-easy-align ............   |ckeys-easyalign|
+        syntastic      ............   |ckeys-syntastic|
+        vim-signature  ............   |ckeys-signature|
+        winresizer     ............   |ckeys-winresizer|
+        vim-surround   ............   |ckeys-surround|
+        vim-autoformat ............   |ckeys-autoformat|
+        misc           ............   |ckeys-misc|
+
+-------------------------------------------------------------------------------
+FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
+
+<F1> : Syntax Check
+<F2> : Toggle highligh
+<F3> : Toggle mouse mode
+<F4> : Toggle indent line
+<F5> : Undotree
+<F6> : Toggle automatic closing for quotes, brackets, etc.
+<F7> : Toggle paste
+<F9> : Autoformat
+<F10>: Open the help document for fzf-vim-commands
+<F11>: Open the functional key mapping section of this help document
+<F12>: Open this help document
+
+-------------------------------------------------------------------------------
+NERDCOMMENTER                                             *ckeys-nerdcommenter*
+
+<leader-cc>    : Comment out the current line or selected lines
+<leader-cspace>: Toggle comment
+<leader-cu>    : Uncomment
+
+-------------------------------------------------------------------------------
+TAGBAR                                                           *ckeys-tagbar*
+
+<c-t>: Toggle tagbar
+
+-------------------------------------------------------------------------------
+FZF                                                                 *ckeys-fzf*
+
+<c-t>     : Open selected item in a new tab
+<c-x>     : Open selected item in a new horizon splitted window
+<c-v>     : Open selected item in a new vertical splitted window
+<F10>     : Open the help document for fzf-vim-commands
+<leader-w>: :Windows
+<leader-b>: :Buffers
+<leader-r>: :History
+<leader-G>: :GGrep, search file contents for current git repository
+<leader-g>: :Rg, search file contents for current directory
+<leader-L>: :Lines, search file contents for all loaded buffers
+<leader-l>: :BLines, search file contents for current buffer
+ff        : :GFiles - search file names for current git repository
+fc        : :Files - search file names for current directory
+
+-------------------------------------------------------------------------------
+UNDOTREE                                                       *ckeys-undotree*
+
+<F5>: :UndotreeToggle
+
+-------------------------------------------------------------------------------
+INCSEARCH                                                     *ckeys-incsearch*
+
+</>: incsearch-forward
+<?>: incsearch-backward
+
+-------------------------------------------------------------------------------
+VIM-EASYMOTION                                               *ckeys-easymotion*
+
+<leader-j>       : index downward
+<leader-k>       : index upward
+<leader-leader-w>: index word at the begining of each word
+<leader-leader-e>: index word at the end of each word
+<s>              : search a word and index it
+
+-------------------------------------------------------------------------------
+INDENTLINE                                                   *ckeys-indentLine*
+
+<F4>: :IndentLinesToggle
+
+-------------------------------------------------------------------------------
+CSCOPE                                                           *ckeys-cscope*
+
+<leader-fs>: Find the symbol
+<leader-fg>: Find the definition
+<leader-fd>: Find functions called by this function
+<leader-fc>: Find functions calling this function
+<leader-ft>: Find this text string
+<leader-fe>: Find this egrep pattern
+<leader-ff>: Find this file
+
+-------------------------------------------------------------------------------
+VIM-EASY-ALIGN                                                *ckeys-easyalign*
+
+<ga>: EasyAlign
+
+Refer to ~/.vimrc for samples.
+
+-------------------------------------------------------------------------------
+SYNTASTIC                                                     *ckeys-syntastic*
+
+<F1>: :SyntasticCheck
+
+-------------------------------------------------------------------------------
+VIM-SIGNATURE                                                 *ckeys-signature*
+
+<m-x>    : Toggle mark x
+<dm-x>   : Remvoe mark x
+<m-,>    : Place the next avaiable mark
+<m-.>    : If there is no mark, place the next available mark, remove otherwise
+<m-/>    : Open location list and display marks from current buffer
+<m-space>: Delete all marks from the current buffer
+
+-------------------------------------------------------------------------------
+WINRESIZER                                                   *ckeys-winresizer*
+
+<c-e>h/j/k/l: Resize window left/down/up/right
+
+-------------------------------------------------------------------------------
+VIM-SURROUND                                                   *ckeys-surround*
+
+<ds>/<cs>/<ys>: :help surround for explanations
+
+-------------------------------------------------------------------------------
+AUTOFORMAT                                                   *ckeys-autoformat*
+
+<F9>: :Autoformat
+
+-------------------------------------------------------------------------------
+MISC                                                               *ckeys-misc*
+
+<F2>: toggle highligh
+<F3>: Toggle mouse mode
+<F6>: Toggle auto-pairs
+<F7>: Toggle paste
+
+
+<jj>: ESC
+<qq>: close buffer with priority quickfix/location-list > normal
+<gn>/<gp>/<gd>: next/previous/delete buffer
+
+<c-h>: go to the lefg split
+<c-l>: go to the right split
+<c-j>: go to the down split
+<c-k>: go to the up split
+<c-o>: go to next split
+
+<leader-leader-s>: :Hex - horizontal split with current directory structure
+<leader-leader-v>: :Vex - vertical split with current directory structure
+
+===============================================================================
+vim:ft=help:et:ts=2:sw=2:sts=2:norl

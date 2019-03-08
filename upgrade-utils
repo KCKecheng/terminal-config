@@ -1,0 +1,55 @@
+#!/usr/bin/env zsh
+
+# Base OS upgrade
+# echo "Upgrading operating system ..."
+# sudo apt update
+# sudo apt upgrade -y
+# sudo pacman -Syu
+
+# Upgrade packages install through pip
+# pip list --outdated | awk '/^[^P-]/{print $1}' > /tmp/outdated.pkgs
+# pip install --upgrade -r /tmp/outdated.pkgs --user
+# rm -f /tmp/outdated.pkgs
+
+# Upgrade tmuxinator on Arch
+# gem outdated | grep tmuxinator
+# if [ $? -eq 0 ]; then
+#   gem update tmuxinator
+# fi
+
+# Upgrade zprezto
+# zprezto upgrade
+# zprezto-update
+# cd $ZPREZTODIR
+cd ~/.zprezto
+
+echo "Save zprezto customized changes..."
+git stash
+
+echo "Upgrading zprezto and plugins ..."
+git pull
+git submodule update --init --recursive
+
+echo "Reapply zprezto customized changes..."
+git stash apply >/dev/null 2>/dev/null
+if [ $? -ne 0 ]; then
+  echo
+  echo "Fail to reapply zprezto customized changes(zprezto/zshrc), please check"
+  echo
+else
+  git stash clear
+fi
+cd ~
+
+# Upgrade fzf
+echo "Upgrade fzf..."
+cd ~/.fzf && git pull && ./install --all
+
+# vim plugins update
+echo "Upgrading vim-plug and vim plugins ..."
+vim +PlugUpgrade +qa
+vim +PlugUpdate +qa
+
+# tmux plugins update
+echo "Upgrading tmux plugins ..."
+~/.tmux/plugins/tpm/bin/update_plugins all

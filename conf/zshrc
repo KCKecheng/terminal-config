@@ -1,0 +1,64 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Define alias
+# pandoc alias
+function markdown_show {
+  if [[ $# -ne 1 ]]; then
+    echo
+    echo "Exactly 1 x parameter should be provided."
+    echo
+  else
+    pandoc -s --toc $1 --metadata title=$1 | w3m -T text/html
+  fi
+}
+alias show='markdown_show'
+
+# Manpage structure show alias
+function mantoc_show {
+  if [[ $# -eq 0 || $# -gt 2 ]]; then
+    echo
+    echo "1 or 2 x parameters should be provided: mantoc [num.] [command]"
+    echo
+  else
+    if [[ $# -eq 1 ]]; then
+      man $1 | grep --color=never '^ \{0,3\}[A-Z]'
+    elif [[ $# -eq 2 ]]; then
+      man $2 | grep --color=never "^ \{0,$1\}[A-Z]"
+    fi
+  fi
+}
+alias mantoc='mantoc_show'
+
+# exit alias
+alias :q='exit'
+
+# fasd alias
+alias d='fasd -d'
+alias f='fasd -f'
+alias c='fasd_cd -d'
+alias v='f -e vim'
+
+# Remove duplicated history records
+setopt HIST_IGNORE_ALL_DUPS
+
+# Customize to your needs...
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=239"
+export VISUAL="vim"
+export EDITOR="vim"
+# export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --height 40% --border"
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --layout=reverse --inline-info --border --no-mouse"
+
+# Options for vim plugin vim-go
+export GOPATH="$HOME/go"
+export GOBIN="$HOME/go/bin"
+export PATH=$GOBIN:$PATH

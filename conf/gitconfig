@@ -1,0 +1,16 @@
+[user]
+  name = <First Name> <Surname>
+  email = <email address>
+[core]
+  editor = vim
+[gitreview]
+  username = kckecheng
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+[hub]
+	host = eos2git.cec.lab.emc.com
+[http]
+	sslVerify = false
+[format]
+	pretty = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%aE>%Creset
