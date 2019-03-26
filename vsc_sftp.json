@@ -1,0 +1,16 @@
+[
+    {
+        "name": "golang",
+        "context": "src/github.com/kckecheng",
+        "uploadOnSave": true,
+        "ignore": [
+            ".vscode",
+            ".git",
+            ".DS_Store"
+        ],
+        "host": "127.0.0.1",
+        "username": "user",
+        "password": "password",
+        "remotePath": "/home/kc/go/src/github.com/kckecheng"
+    }
+]
