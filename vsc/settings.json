@@ -1,15 +1,26 @@
 {
-    "editor.fontSize": 16,
-    "editor.wordWrap": "on",
-    "explorer.confirmDelete": false,
-    "markdown.preview.fontSize": 16,
-    "terminal.integrated.fontSize": 16,
-    "python.jediEnabled": false,
-    "gitlens.showWhatsNewAfterUpgrades": false,
-    "workbench.iconTheme": "vscode-icons",
-    "vsintellicode.java.completionsEnabled": false,
-    "python.linting.pylintEnabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "files.eol": "\n"
+  // Folders will be pupulated automatically when they are added into a workspace
+	/*
+	"folders": [
+		{
+			"path": "C:\\Users\\kc\\Documents\\Projects\\SourceCode\\testcase-automation"
+		},
+		{
+			"path": "C:\\Users\\kc\\go"
+		}
+	],
+	*/
+	// Workspace level settings
+	"settings": {
+		"editor.fontSize": 16,
+		"editor.lineHeight": 24,
+		"files.eol": "\n",
+		"editor.wordWrap": "on",
+		"explorer.confirmDelete": false,
+		"markdown.preview.fontSize": 16,
+		"terminal.integrated.fontSize": 16,
+		"workbench.iconTheme": "material-icon-theme",
+		"editor.fontWeight": "bold",
+		"terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe"
+	}
 }
