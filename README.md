@@ -1,3 +1,3 @@
 # terminal
 
-A directory to hold terminal related configurations and scripts.
+MISC Configrations and scripts for development environments.
