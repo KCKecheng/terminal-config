@@ -599,7 +599,7 @@ autocmd FileType netrw setl bufhidden=wipe
 
 " *** MISC options ***
 " set ai
-" set hlsearch
+set hlsearch
 set encoding=utf-8
 set number relativenumber
 set ic
