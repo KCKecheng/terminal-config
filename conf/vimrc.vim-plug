@@ -35,7 +35,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'brookhong/cscope.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'myint/syntastic-extras'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 " Code snippets - ultisnips and vim-snippets need to be enabled together
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -345,7 +345,7 @@ let g:autoformat_remove_trailing_spaces = 0
 let g:formatters_python = ['black']
 
 " Key map
-nnoremap <silent><F9> :Autoformat<CR>
+nnoremap <silent><F8> :Autoformat<CR>
 
 " *** vim-go ***
 " Options
@@ -471,6 +471,8 @@ nnoremap qq :call CloseBuffer()<CR>
 " Toggle hlsearch
 nnoremap <silent><F2> :set hlsearch! <CR>
 
+" Invoke the help document for ckeys-cscope
+nnoremap <silent><F9> :help ckeys-cscope<CR>
 " Invoke the help document for fzf-vim-command
 nnoremap <silent><F10> :help fzf-vim-commands<CR>
 " Invoke the help document for function key maps
