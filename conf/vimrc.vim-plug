@@ -351,6 +351,8 @@ nnoremap <silent><F8> :Autoformat<CR>
 " Options
 " let g:go_bin_path = expand($HOME)."/.vim/go/bin"
 " Leverage tagbar globally
+" let g:go_def_mode='gopls'
+" let g:go_def_mode='guru'
 let g:go_def_mapping_enabled=0
 let g:go_list_type = "quickfix"
 
