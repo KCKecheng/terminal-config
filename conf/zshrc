@@ -61,4 +61,5 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --layout=reverse --inline-info --bord
 # Options for vim plugin vim-go
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
-export PATH=$GOBIN:$PATH
+export SSHPATH="$HOME/sourcecode/misc/servers"
+export PATH=$GOBIN:$SSHPATH:$PATH
