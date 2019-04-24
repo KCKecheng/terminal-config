@@ -275,6 +275,9 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=0
 " Use flake8 instead of the default pylint which reports too many information
 let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_pylint_post_args="--max-line-length=120"
+" let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
+let g:syntastic_python_flake8_post_args='--max-line-length=120'
 " Key map
 nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
 
@@ -574,7 +577,8 @@ set cursorline
 set cursorcolumn
 
 " Source code in one line should not be longer than 80 x characters(git BP)
-set colorcolumn=80
+" set colorcolumn=80
+set colorcolumn=80,120
 
 " *** Tab expansion ***
 set expandtab
