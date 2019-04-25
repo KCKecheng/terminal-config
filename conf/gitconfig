@@ -8,9 +8,10 @@
 [merge]
   tool = vimdiff
   conflictstyle = diff3
-[hub]
-	host = eos2git.cec.lab.emc.com
 [http]
 	sslVerify = false
+[credential]
+  helper = cache
 [format]
 	pretty = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%aE>%Creset
+
