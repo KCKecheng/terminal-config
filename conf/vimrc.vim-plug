@@ -28,13 +28,14 @@ Plug 'crusoexia/vim-monokai'
 Plug 'fatih/molokai'
 Plug 'altercation/vim-colors-solarized'
 " Coding
+Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Yggdroot/indentLine'
 Plug 'brookhong/cscope.vim'
-Plug 'vim-syntastic/syntastic'
-Plug 'myint/syntastic-extras'
+" Plug 'vim-syntastic/syntastic'
+" Plug 'myint/syntastic-extras'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 " Code snippets - ultisnips and vim-snippets need to be enabled together
 Plug 'SirVer/ultisnips'
@@ -264,25 +265,43 @@ nmap ga <Plug>(EasyAlign)
 " - :help syntastic-commands
 " Notes: code checker needs to be installed(refer to :help syntastic-checkers)
 " Options
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
-let g:syntastic_mode = "passive"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs=0
-" Python checker
-let g:syntastic_python_checkers = ['flake8']
-" let g:syntastic_python_pylint_post_args="--max-line-length=120"
-" let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
-let g:syntastic_python_flake8_post_args='--max-line-length=120'
-" Go checker
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" Key map
-nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
+" let g:syntastic_mode = "passive"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_enable_signs=0
+" " Python checker
+" let g:syntastic_python_checkers = ['flake8']
+" " let g:syntastic_python_pylint_post_args="--max-line-length=120"
+" " let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
+" let g:syntastic_python_flake8_post_args='--max-line-length=120'
+" " Go checker
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" " Key map
+" nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
+
+" *** ale ***
+"  Help
+"  - :ALEInfo
+"  - :ALEFixSuggest
+"  - :ALEFix
+" Options
+" let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines'],
+\   'javascript': ['eslint'],
+\   'python': ['flake8']
+\}
+let g:ale_python_flake8_options = '--max-line-length=120'
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_open_list = 1
 
 " *** vim-signature ***
 " Refer to https://github.com/kshenoy/vim-signature

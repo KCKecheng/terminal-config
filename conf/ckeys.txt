@@ -17,7 +17,6 @@ KEY MAPS~
         indentLine     ............   |ckeys-indentLine|
         cscope         ............   |ckeys-cscope|
         vim-easy-align ............   |ckeys-easyalign|
-        syntastic      ............   |ckeys-syntastic|
         vim-signature  ............   |ckeys-signature|
         winresizer     ............   |ckeys-winresizer|
         vim-surround   ............   |ckeys-surround|
@@ -27,7 +26,6 @@ KEY MAPS~
 -------------------------------------------------------------------------------
 FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
 
-<F1> : Syntax Check
 <F2> : Toggle highligh
 <F3> : Toggle mouse mode
 <F4> : Toggle indent line
@@ -111,11 +109,6 @@ VIM-EASY-ALIGN                                                *ckeys-easyalign*
 <ga>: EasyAlign
 
 Refer to ~/.vimrc for samples.
-
--------------------------------------------------------------------------------
-SYNTASTIC                                                     *ckeys-syntastic*
-
-<F1>: :SyntasticCheck
 
 -------------------------------------------------------------------------------
 VIM-SIGNATURE                                                 *ckeys-signature*
