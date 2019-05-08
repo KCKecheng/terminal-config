@@ -598,7 +598,7 @@ colorscheme gruvbox
 set cursorline
 set cursorcolumn
 
-" Source code in one line should not be longer than 80 x characters(git BP)
+" Source code in one line should not be longer than 80/120 x characters
 " set colorcolumn=80
 set colorcolumn=80,120
 
@@ -613,6 +613,10 @@ set wildmode=list:longest,full
 
 " *** Do not fold by default(only fold after nested for X times)
 set foldlevel=5
+
+" *** Allow erasing previously entered characters, autoindent and newlines ***
+" set backspace=2
+set backspace=indent,eol,start
 
 " *** net-rw ***
 " let g:netrw_browse_split = 4
