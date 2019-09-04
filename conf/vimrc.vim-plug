@@ -56,6 +56,9 @@ Plug 'pearofducks/ansible-vim'
 Plug 'fs111/pydoc.vim'
 " PowerShell
 Plug 'pprovost/vim-ps1'
+" RST
+Plug 'Rykka/riv.vim'
+Plug 'Rykka/InstantRst'
 
 call plug#end()
 filetype plugin indent on
