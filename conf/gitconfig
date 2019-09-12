@@ -14,4 +14,5 @@
   helper = cache
 [format]
 	pretty = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%aE>%Creset
-
+[hub]
+  protocol = https
