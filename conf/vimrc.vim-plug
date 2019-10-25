@@ -652,6 +652,8 @@ autocmd FileType netrw setl bufhidden=wipe
 
 " *** MISC options ***
 " set ai
+" Show full path of buffers
+set statusline+=%F
 set maxmempattern=2000
 set hlsearch
 set encoding=utf-8
