@@ -203,6 +203,8 @@ nmap s <Plug>(easymotion-sn)
 " Word motion
 nmap <leader><leader>w <Plug>(easymotion-bd-w)
 nmap <leader><leader>e <Plug>(easymotion-bd-e)
+nmap <leader><leader>wl <Plug>(easymotion-bd-wl)
+nmap <leader><leader>el <Plug>(easymotion-bd-el)
 
 " *** indentLine ***
 " :IndentLinesToggle - disable/enable the plugin
@@ -651,12 +653,13 @@ let g:netrw_hide = 1 "Do not list files defined by netrw_list_hide
 autocmd FileType netrw setl bufhidden=wipe
 
 " *** MISC options ***
+" set relativenumber
 " set ai
 " Show full path of buffers
 set statusline+=%F
 set maxmempattern=2000
 set hlsearch
 set encoding=utf-8
-set number relativenumber
+set number
 set ic
 set nowrap
