@@ -28,11 +28,11 @@ Plug 'crusoexia/vim-monokai'
 Plug 'fatih/molokai'
 Plug 'altercation/vim-colors-solarized'
 " Coding
+" Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
-Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'Yggdroot/indentLine'
 Plug 'brookhong/cscope.vim'
 " Plug 'vim-syntastic/syntastic'
 " Plug 'myint/syntastic-extras'
@@ -76,48 +76,13 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 
-" *** tagbar ***
+" *** vista ***
 " Options
-" Ansible Support
-let g:tagbar_type_yaml = {
-\ 'ctagstype' : 'ansible',
-\ 'kinds' : [
-  \ 't:tasks'
-\ ],
-\ 'sort' : 0,
-\ }
-" reStructuredText Support
-let g:tagbar_type_rst = {
-\ 'ctagstype': 'rst',
-\ 'ctagsbin' : '/usr/bin/rst2ctags',
-\ 'ctagsargs' : '-f - --sort=yes',
-\ 'kinds' : [
-    \ 's:sections',
-    \ 'i:images'
-\ ],
-\ 'sro' : '|',
-\ 'kind2scope' : {
-    \ 's' : 'section',
-\ },
-\ 'sort': 0,
-\ }
-" Markdown Support(need ctags configuration(.ctags))
-let g:tagbar_type_markdown = {
-\ 'ctagstype': 'markdown',
-\ 'ctagsbin' : '/usr/local/bin/markdown2ctags.py',
-\ 'ctagsargs' : '-f - --sort=yes',
-\ 'kinds' : [
-    \ 's:sections',
-    \ 'i:images'
-\ ],
-\ 'sro' : '|',
-\ 'kind2scope' : {
-    \ 's' : 'section',
-\ },
-\ 'sort': 0,
-\ }
-" Key map
-noremap <C-t> :Tagbar<CR>
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " *** fzf.vim ***
 " fzf colors
@@ -151,7 +116,7 @@ nnoremap <leader>w :Windows<cr>
 " Buffer list
 nnoremap <leader>b :Buffers<cr>
 " Most recent files list
-nnoremap <leader>r :History<cr>
+nnoremap <leader>h :History<cr>
 " Search file names for current git repository
 nnoremap ff :GFiles<cr>
 " Search file names for current directory
@@ -164,6 +129,8 @@ nnoremap <leader>g :Rg<cr>
 nnoremap <leader>L :Lines<cr>
 " Search lines for current buffer
 nnoremap <leader>l :BLines<cr>
+" Search marks
+nnoremap <leader>m :Marks<cr>
 
 " *** vim-airline ***
 " Options
@@ -175,8 +142,6 @@ set laststatus=2
 " Options
 let g:undotree_WindowLayout = 2
 let g:undotree_DiffCommand = "diff -u"
-" Key map
-nnoremap <silent><F5> :UndotreeToggle<CR>
 
 " *** incsearch ***
 " Key map
@@ -205,18 +170,6 @@ nmap <leader><leader>w <Plug>(easymotion-bd-w)
 nmap <leader><leader>e <Plug>(easymotion-bd-e)
 nmap <leader><leader>wl <Plug>(easymotion-bd-wl)
 nmap <leader><leader>el <Plug>(easymotion-bd-el)
-
-" *** indentLine ***
-" :IndentLinesToggle - disable/enable the plugin
-" Options
-let g:indentLine_enabled = 0
-" Key map
-" nnoremap <silent><F4> :IndentLinesToggle <CR>
-function! IndentLine_MToggle()
-  :IndentLinesToggle
-  :LeadingSpaceToggle
-endfunc
-nnoremap <silent><F4> :call IndentLine_MToggle() <CR>
 
 " ***  vim-colors-solarized ***
 " Turn on syntax highlight before using a color scheme
@@ -304,7 +257,6 @@ nmap ga <Plug>(EasyAlign)
 " " Go checker
 " let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 " " Key map
-" nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
 
 " *** ale ***
 "  Help
@@ -352,10 +304,6 @@ let g:UltiSnipsExpandTrigger='<tab>'
 " Key map
 " Ctrl + E, then h/j/k/l
 
-" *** jiangmiao/auto-pairs ***
-" Key map
-let g:AutoPairsShortcutToggle = '<F6>'
-
 " *** tpope/vim-surround ***
 " Key map
 " ds/cs/ys
@@ -390,22 +338,19 @@ let g:autoformat_remove_trailing_spaces = 0
 " Note: black needs to be installed(pip install --user black)
 let g:formatters_python = ['black']
 
-" Key map
-nnoremap <silent><F8> :Autoformat<CR>
-
 " *** vim-go ***
 " Options
 " let g:go_bin_path = expand($HOME)."/.vim/go/bin"
-" Leverage tagbar globally
+" let g:go_def_mapping_enabled=1
 " let g:go_def_mode='gopls'
 " let g:go_def_mode='guru'
-let g:go_def_mapping_enabled=0
+" let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 
-" ====== Personal Key Map(not plugin related) ======
+" ====== Personal Key Map Function Definition(not plugin related) ======
 "
 " *** Mouse Toggle ***
-" Map F3 to toggle mouse mode support
 function! ToggleMouse()
     " check if mouse is enabled
     if &mouse == 'n'
@@ -416,12 +361,10 @@ function! ToggleMouse()
         set mouse=n
     endif
 endfunc
-nnoremap <silent><F3> :call ToggleMouse()<CR>
 " Turn on mouse in normal mode by default
 set mouse=n
 
 " *** Paste Toggle ***
-" Map F7 to toggle paste
 function! TogglePaste()
     " check if paste is enabled
     if &paste == '1'
@@ -432,7 +375,6 @@ function! TogglePaste()
         set paste
     endif
 endfunc
-nnoremap <silent><F7> :call TogglePaste()<CR>
 " Disable paste as inital status
 set nopaste
 
@@ -445,10 +387,6 @@ augroup END
 nnoremap gn :bn<CR>
 nnoremap gp :bp<CR>
 nnoremap gd :bd<CR>
-
-" *** ESC remap ***
-" Map jj as pressing ESC under insert mode(ESC still works)
-inoremap jj <Esc>
 
 " *** view/split navigation ***
 " nnoremap ;a <C-w>h
@@ -514,18 +452,20 @@ endfunc
 " Map shortcut qq to call the function
 nnoremap qq :call CloseBuffer()<CR>
 
-" Clear the last highlight
-" nnoremap <silent><F2> :noh <CR>
-" Toggle hlsearch
-nnoremap <silent><F2> :set hlsearch! <CR>
-
-" Invoke the help document for ckeys-cscope
+" ====== Function Key Mapping ======
+" Control function key mappings centralized
+"
+" nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
+nnoremap <silent><F2> :Vista!!<CR>
+nnoremap <silent><F3> :call ToggleMouse()<CR>
+let g:AutoPairsShortcutToggle = '<F4>'
+nnoremap <silent><F5> :UndotreeToggle<CR>
+nnoremap <silent><F6> :set hlsearch! <CR>
+nnoremap <silent><F7> :call TogglePaste()<CR>
+nnoremap <silent><F8> :Autoformat<CR>
 nnoremap <silent><F9> :help ckeys-cscope<CR>
-" Invoke the help document for fzf-vim-command
 nnoremap <silent><F10> :help fzf-vim-commands<CR>
-" Invoke the help document for function key maps
 nnoremap <silent><F11> :help ckeys-funckeys<CR>
-" Invoke the help document for key maps
 nnoremap <silent><F12> :help ckeys<CR>
 
 " ====== Frequently used options(not plugin related) ======
@@ -639,27 +579,15 @@ set foldlevel=5
 " set backspace=2
 set backspace=indent,eol,start
 
-" *** net-rw ***
-" let g:netrw_browse_split = 4
-" let g:netrw_altv = 1
-" let g:netrw_winsize = 25
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-" let g:netrw_list_hide = netrw_gitignore#Hide() . '.*\.swp,.*\.pyc,.*\.retry'
-let g:netrw_list_hide = '.*\.swp,.*\.pyc,.*\.retry'
-let g:netrw_hide = 1 "Do not list files defined by netrw_list_hide
-" Do not save a directory changes
-" autocmd FileType netrw setl bufhidden=delete
-autocmd FileType netrw setl bufhidden=wipe
-
 " *** MISC options ***
 " set relativenumber
 " set ai
 " Show full path of buffers
 set statusline+=%F
 set maxmempattern=2000
+set autoread
 set hlsearch
 set encoding=utf-8
 set number
 set ic
-set nowrap
+set wrap
