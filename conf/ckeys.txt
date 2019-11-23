@@ -7,30 +7,29 @@
 ===============================================================================
 KEY MAPS~
 
-        function keys  ............   |ckeys-funckeys|
-        nerdcommenter  ............   |ckeys-nerdcommenter|
-        tagbar         ............   |ckeys-tagbar|
-        fzf-vim        ............   |ckeys-fzf|
-        undotree       ............   |ckeys-undotree|
-        incsearch      ............   |ckeys-incsearch|
-        vim-easymotion ............   |ckeys-easymotion|
-        indentLine     ............   |ckeys-indentLine|
         cscope         ............   |ckeys-cscope|
+        function keys  ............   |ckeys-funckeys|
+        fzf-vim        ............   |ckeys-fzf|
+        incsearch      ............   |ckeys-incsearch|
+        misc           ............   |ckeys-misc|
+        nerdcommenter  ............   |ckeys-nerdcommenter|
+        undotree       ............   |ckeys-undotree|
+        vim-autoformat ............   |ckeys-autoformat|
+        vim-easymotion ............   |ckeys-easymotion|
         vim-easy-align ............   |ckeys-easyalign|
         vim-signature  ............   |ckeys-signature|
-        winresizer     ............   |ckeys-winresizer|
         vim-surround   ............   |ckeys-surround|
-        vim-autoformat ............   |ckeys-autoformat|
-        misc           ............   |ckeys-misc|
+        vista          ............   |ckeys-Vista|
+        winresizer     ............   |ckeys-winresizer|
 
 -------------------------------------------------------------------------------
 FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
 
-<F2> : Toggle highligh
+<F2> : Toggle vista
 <F3> : Toggle mouse mode
-<F4> : Toggle indent line
+<F4> : Toggle auto pairs
 <F5> : Undotree
-<F6> : Toggle automatic closing for quotes, brackets, etc.
+<F6> : Toggle highlight
 <F7> : Toggle paste
 <F8> : Autoformat
 <F9> : Open the help document for cscope
@@ -46,9 +45,9 @@ NERDCOMMENTER                                             *ckeys-nerdcommenter*
 <leader-cu>    : Uncomment
 
 -------------------------------------------------------------------------------
-TAGBAR                                                           *ckeys-tagbar*
+VISTA                                                             *ckeys-vista*
 
-<c-t>: Toggle tagbar
+<F2>: Toggle Vista
 
 -------------------------------------------------------------------------------
 FZF                                                                 *ckeys-fzf*
@@ -59,7 +58,7 @@ FZF                                                                 *ckeys-fzf*
 <F10>     : Open the help document for fzf-vim-commands
 <leader-w>: :Windows
 <leader-b>: :Buffers
-<leader-r>: :History
+<leader-h>: :History
 <leader-G>: :GGrep, search file contents for current git repository
 <leader-g>: :Rg, search file contents for current directory
 <leader-L>: :Lines, search file contents for all loaded buffers
@@ -85,12 +84,9 @@ VIM-EASYMOTION                                               *ckeys-easymotion*
 <leader-k>       : index upward
 <leader-leader-w>: index word at the begining of each word
 <leader-leader-e>: index word at the end of each word
+<leader-leader-wl>: index word at the begining of each word for current line
+<leader-leader-el>: index word at the begining of each word for current line
 <s>              : search a word and index it
-
--------------------------------------------------------------------------------
-INDENTLINE                                                   *ckeys-indentLine*
-
-<F4>: :IndentLinesToggle
 
 -------------------------------------------------------------------------------
 CSCOPE                                                           *ckeys-cscope*
@@ -133,18 +129,16 @@ VIM-SURROUND                                                   *ckeys-surround*
 -------------------------------------------------------------------------------
 AUTOFORMAT                                                   *ckeys-autoformat*
 
-<F9>: :Autoformat
+<F8>: :Autoformat
 
 -------------------------------------------------------------------------------
 MISC                                                               *ckeys-misc*
 
-<F2>: toggle highligh
 <F3>: Toggle mouse mode
-<F6>: Toggle auto-pairs
+<F4>: Toggle auto-pairs
+<F6>: toggle highligh
 <F7>: Toggle paste
 
-
-<jj>: ESC
 <qq>: close buffer with priority quickfix/location-list > normal
 <gn>/<gp>/<gd>: next/previous/delete buffer
 
