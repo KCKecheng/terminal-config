@@ -62,5 +62,10 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --layout=reverse --inline-info --bord
 # Options for vim plugin vim-go
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
+# Options for go module proxy
+export GO111MODULE=on
+export GOPROXY=https://goproxy.io
+# ssh connection shortcuts
 export SSHPATH="$HOME/sourcecode/misc/servers"
+# PATH
 export PATH=$GOBIN:$SSHPATH:$PATH
