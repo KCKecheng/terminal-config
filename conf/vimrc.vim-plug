@@ -463,9 +463,8 @@ nnoremap <silent><F5> :UndotreeToggle<CR>
 nnoremap <silent><F6> :set hlsearch! <CR>
 nnoremap <silent><F7> :call TogglePaste()<CR>
 nnoremap <silent><F8> :Autoformat<CR>
-nnoremap <silent><F9> :help ckeys-cscope<CR>
-nnoremap <silent><F10> :help fzf-vim-commands<CR>
-nnoremap <silent><F11> :help ckeys-funckeys<CR>
+nnoremap <silent><F9> :help ckeys-fzf<CR>
+nnoremap <silent><F10> :help ckeys-funckeys<CR>
 nnoremap <silent><F12> :help ckeys<CR>
 
 " ====== Frequently used options(not plugin related) ======

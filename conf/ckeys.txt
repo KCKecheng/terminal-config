@@ -32,9 +32,8 @@ FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
 <F6> : Toggle highlight
 <F7> : Toggle paste
 <F8> : Autoformat
-<F9> : Open the help document for cscope
-<F10>: Open the help document for fzf-vim-commands
-<F11>: Open the functional key mapping section of this help document
+<F9> : Open the help document for fzf key mappings
+<F10>: Open the help document for function key mappings
 <F12>: Open this help document
 
 -------------------------------------------------------------------------------
