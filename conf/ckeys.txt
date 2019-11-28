@@ -63,6 +63,7 @@ FZF                                                                 *ckeys-fzf*
 <leader-g>: :Rg, search file contents for current directory
 <leader-L>: :Lines, search file contents for all loaded buffers
 <leader-l>: :BLines, search file contents for current buffer
+<leader-m>: :Marks, show bookmarks
 ff        : :GFiles - search file names for current git repository
 fc        : :Files - search file names for current directory
 
