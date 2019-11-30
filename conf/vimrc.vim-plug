@@ -557,6 +557,10 @@ colorscheme gruvbox
 " Highlight current line and cursor for easy alignment
 set cursorline
 set cursorcolumn
+" Set color used for the highlight
+" Color code can be gotten with the script screen-256color.sh
+" highlight cursorline ctermbg=<color code> ctermfg=<color code>
+" highlight cursorcolumn ctermbg=<color code> ctermfg=<color code>
 
 " Source code in one line should not be longer than 80/120 x characters
 " set colorcolumn=80
