@@ -119,14 +119,15 @@ function init_vim {
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   cp $SCRIPT_DIR/conf/vimrc.vim-plug ~/.vimrc
 
-  # Install rst2ctags and markdown2ctags to support rst and md tags
-  sudo pacman -S rst2ctags || sudo apt install rst2ctags
-  pip install --user markdown2ctags
-  sudo cp ~/.local/bin/markdown2ctags /usr/local/bin/markdown2ctags.py
-
-  # Add customized lanaguages support (such as Ansible ) to ctags in order to use tagbar
-  mkdir ~/.ctags.d
-  cp $SCRIPT_DIR/conf/ansible.ctags ~/.ctags.d
+  # Vista supports lsp which covers tags related showcase
+  # # Install rst2ctags and markdown2ctags to support rst and md tags
+  # sudo pacman -S rst2ctags || sudo apt install rst2ctags
+  # pip install --user markdown2ctags
+  # sudo cp ~/.local/bin/markdown2ctags /usr/local/bin/markdown2ctags.py
+  #
+  # # Add customized lanaguages support (such as Ansible ) to ctags in order to use tagbar
+  # mkdir ~/.ctags.d
+  # cp $SCRIPT_DIR/conf/ansible.ctags ~/.ctags.d
 
   # echo "******************************************************************"
   # echo "* Please execute below steps after this script:                  *"
@@ -223,14 +224,18 @@ else
   INIT_T=$1
 fi
 
-# Which distribution this scripe is running on
-which pacman
-if [ $? -eq 0 ]; then
-  # RELEASE='ARCH'
-  arch_prepare
+if [[ -f /tmp/preparation-done ]]; then
+  echo "Base OS preparation is already done"
 else
-  # RELEASE='UBUNTU'
-  ubuntu_prepare
+  which pacman
+  if [ $? -eq 0 ]; then
+    # RELEASE='ARCH'
+    arch_prepare
+  else
+    # RELEASE='UBUNTU'
+    ubuntu_prepare
+  fi
+  touch /tmp/preparation-done
 fi
 
 if [[ "$INIT_T" = "tmux" ]]; then
