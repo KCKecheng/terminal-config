@@ -9,6 +9,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'simeji/winresizer'
 Plug 'mbbill/undotree'
 " Search and navigate
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'kshenoy/vim-signature'
