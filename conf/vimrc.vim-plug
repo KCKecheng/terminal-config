@@ -84,6 +84,8 @@ function! NearestMethodOrFunction() abort
 endfunction
 set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+" Close vista if it is the last buffer left
+autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsVisible() | execute "normal! :q!\<CR>" | endif
 
 " *** fzf.vim ***
 " fzf colors
