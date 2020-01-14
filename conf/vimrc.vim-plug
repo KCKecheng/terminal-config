@@ -398,7 +398,7 @@ augroup qf
 augroup END
 nnoremap gn :bn<CR>
 nnoremap gp :bp<CR>
-nnoremap gd :bd<CR>
+nnoremap bd :bd<CR>
 
 " *** view/split navigation ***
 " nnoremap ;a <C-w>h
@@ -605,4 +605,4 @@ set hlsearch
 set encoding=utf-8
 set number
 set ic
-set wrap
+set nowrap

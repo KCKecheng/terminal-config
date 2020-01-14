@@ -140,7 +140,7 @@ MISC                                                               *ckeys-misc*
 <F7>: Toggle paste
 
 <qq>: close buffer with priority quickfix/location-list > normal
-<gn>/<gp>/<gd>: next/previous/delete buffer
+<gn>/<gp>/<bd>: next/previous/delete buffer
 
 <c-h>: go to the lefg split
 <c-l>: go to the right split
