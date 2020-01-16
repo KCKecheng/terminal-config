@@ -2,18 +2,20 @@
 " Refer to https://github.com/junegunn/vim-plug for details
 call plug#begin('~/.vim/plugged')
 
-" ------ Add personal plugins here -------
+" ------ plugins enablement begin -------
 " *** Common Plugins ***
 " Basic
 Plug 'scrooloose/nerdcommenter'
 Plug 'simeji/winresizer'
 Plug 'mbbill/undotree'
+
 " Search and navigate
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'kshenoy/vim-signature'
 Plug 'haya14busa/incsearch.vim'
+
 " Format
 Plug 'junegunn/vim-easy-align'
 Plug 'Chiel92/vim-autoformat'
@@ -21,6 +23,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " Surrounding auto complemete and modify
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+
 " Theme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -28,6 +31,7 @@ Plug 'morhetz/gruvbox'
 Plug 'crusoexia/vim-monokai'
 Plug 'fatih/molokai'
 Plug 'altercation/vim-colors-solarized'
+
 " Coding
 " Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
@@ -37,29 +41,38 @@ Plug 'airblade/vim-gitgutter'
 Plug 'brookhong/cscope.vim'
 " Plug 'vim-syntastic/syntastic'
 " Plug 'myint/syntastic-extras'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 " Code snippets - ultisnips and vim-snippets need to be enabled together
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " *** Lanaguage Specific Plugins ***
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+
+" Python
+Plug 'davidhalter/jedi-vim'
+" pydoc - triggered by K(shift + k)
+Plug 'fs111/pydoc.vim'
+
 " Ansible Plugin
 Plug 'pearofducks/ansible-vim'
+
 " React JSX/javascript plugin
 " Plug 'pangloss/vim-javascript'
 " Plug 'mxw/vim-jsx'
+
 " HTML/XML/Jinja Plugin
 " Plug 'alvan/vim-closetag'
 " Plug 'Valloric/MatchTagAlways'
-" Python pydoc - triggered by K(shift + k)
-Plug 'fs111/pydoc.vim'
+
 " PowerShell
 Plug 'pprovost/vim-ps1'
+
 " RST
 Plug 'Rykka/riv.vim'
-Plug 'Rykka/InstantRst'
+" Plug 'Rykka/InstantRst'
+" ------ plugins enablement end -------
 
 call plug#end()
 filetype plugin indent on
@@ -295,13 +308,13 @@ let g:ale_open_list = 1
 " *** SirVer/ultisnips and honza/vim-snippets ***
 " 0 - Still open the preview window
 " 1 - Close the preview window
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 0
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_autoclose_preview_window_after_completion = 0
 " By default, YCM use tab, which is conflicted with ultisnips. Below setting
 " disable tab for YCM.
-let g:ycm_key_list_select_completion=['<Down>']
-let g:ycm_key_list_previous_completion=['<Up>']
-let g:UltiSnipsExpandTrigger='<tab>'
+" let g:ycm_key_list_select_completion=['<Down>']
+" let g:ycm_key_list_previous_completion=['<Up>']
+" let g:UltiSnipsExpandTrigger='<tab>'
 
 " *** simeji/winresizer ***
 " Key map
@@ -321,7 +334,7 @@ let g:ansible_name_highlight = 'b'
 let g:ansible_extra_keywords_highlight = 1
 let g:ansible_normal_keywords_highlight = 'Constant'
 let g:ansible_with_keywords_highlight = 'Constant'
-au BufRead,BufNewFile *.yml,*.yaml set filetype=yaml.ansible
+autocmd BufRead,BufNewFile *.yml,*.yaml set filetype=yaml.ansible
 
 " *** vim-javascript ***
 " Options
@@ -341,14 +354,12 @@ let g:autoformat_remove_trailing_spaces = 0
 " Note: black needs to be installed(pip install --user black)
 let g:formatters_python = ['black']
 
+" *** vim-jedi ***
+" <C-space> for autocomplete
+autocmd FileType python setlocal omnifunc=jedi#completions
+
 " *** vim-go ***
 " Options
-" let g:go_bin_path = expand($HOME)."/.vim/go/bin"
-" let g:go_def_mapping_enabled=1
-" let g:go_def_mode='gopls'
-" let g:go_def_mode='guru'
-" let g:go_fmt_fail_silently = 1
-" let g:go_gopls_complete_unimported = 0
 " Highlight
 " let g:go_highlight_generate_tags = 1
 let g:go_highlight_types = 1
@@ -356,9 +367,20 @@ let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_extra_types = 1
+" Run goimports along gofmt on each save
+" let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
+" Use quickfix for information
 let g:go_list_type = "quickfix"
 let g:go_list_height = 10
+" Autocomplete with gopls: <C-x><C-o>
+" Refer to https://stackoverflow.com/questions/24100896
+" let g:go_gopls_complete_unimported = 0
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+autocmd FileType go setlocal omnifunc=go#complete#Complete
+autocmd FileType go inoremap <buffer> . .<C-x><C-o>
+autocmd FileType go inoremap <C-g> <C-x><C-o>
 
 " ====== Personal Key Map Function Definition(not plugin related) ======
 "
@@ -483,7 +505,7 @@ nnoremap <silent><F12> :help ckeys<CR>
 "
 " Automatically adjust quickfix window size, refer to
 " http://vim.wikia.com/wiki/Automatically_fitting_a_quickfix_window_height
-au FileType qf call AdjustWindowHeight(1, 30)
+autocmd FileType qf call AdjustWindowHeight(1, 30)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
@@ -503,7 +525,7 @@ endif
 " set writebackup
 set backup
 set backupdir=~/.vim/backup//
-au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
+autocmd BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
 
 " *** Persistent undo ***
 if isdirectory('~/.vim/undo') == 0
@@ -593,6 +615,9 @@ set foldlevel=5
 " *** Allow erasing previously entered characters, autoindent and newlines ***
 " set backspace=2
 set backspace=indent,eol,start
+
+" *** Close preview window after autocomplete completition ***
+autocmd CompleteDone * pclose
 
 " *** MISC options ***
 " set relativenumber
