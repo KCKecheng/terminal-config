@@ -286,7 +286,8 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8']
 \}
-let g:ale_python_flake8_options = '--max-line-length=120'
+" E402: import not at the top
+let g:ale_python_flake8_options = '--max-line-length=120 --ignore E402'
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
@@ -355,7 +356,15 @@ let g:autoformat_remove_trailing_spaces = 0
 let g:formatters_python = ['black']
 
 " *** vim-jedi ***
-" <C-space> for autocomplete
+" Key map
+" <C-space>: autocomplete
+" <leader>g: go to assignment/function
+" <leader>d: go to definition
+" K: show document
+" Options
+" let g:jedi#auto_initialization = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#completions_enabled = 0
 autocmd FileType python setlocal omnifunc=jedi#completions
 
 " *** vim-go ***
