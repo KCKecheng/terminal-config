@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdcommenter'
 Plug 'simeji/winresizer'
 Plug 'mbbill/undotree'
+Plug 'romainl/vim-qf'
 
 " Search and navigate
 Plug 'junegunn/fzf'
@@ -39,8 +40,6 @@ Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'brookhong/cscope.vim'
-" Plug 'vim-syntastic/syntastic'
-" Plug 'myint/syntastic-extras'
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 " Code snippets - ultisnips and vim-snippets need to be enabled together
 " Plug 'SirVer/ultisnips'
@@ -52,8 +51,6 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 
 " Python
 Plug 'davidhalter/jedi-vim'
-" pydoc - triggered by K(shift + k)
-Plug 'fs111/pydoc.vim'
 
 " Ansible Plugin
 Plug 'pearofducks/ansible-vim'
@@ -248,32 +245,6 @@ nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" *** syntastic ***
-" Help
-" - :help syntastic
-" - :help syntastic-checkers
-" - :help syntastic-commands
-" Notes: code checker needs to be installed(refer to :help syntastic-checkers)
-" Options
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
-" let g:syntastic_mode = "passive"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_enable_signs=0
-" " Python checker
-" let g:syntastic_python_checkers = ['flake8']
-" " let g:syntastic_python_pylint_post_args="--max-line-length=120"
-" " let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
-" let g:syntastic_python_flake8_post_args='--max-line-length=120'
-" " Go checker
-" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" " Key map
-
 " *** ale ***
 "  Help
 "  - :ALEInfo
@@ -350,10 +321,14 @@ let g:javascript_plugin_flow = 1
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
-
-" Use black for python format(the default is autopep8):
-" Note: black needs to be installed(pip install --user black)
-let g:formatters_python = ['black']
+" python options
+autocmd FileType python call SetAutoFormatPython()
+function SetAutoFormatPython()
+  let b:autoformat_autoindent = 1
+  let b:autoformat_retab = 1
+  let b:autoformat_remove_trailing_spaces = 1
+  let b:formatters_python = ['black']
+endfunction
 
 " *** jedi-vim ***
 " Key map
@@ -455,51 +430,12 @@ nnoremap <leader><leader>s :Hex<CR>
 nnoremap <leader><leader>v :Vex<CR>
 
 " *** Close Buffer ***
-" Check if any preview-window exists
-" function! PreviewWindowExisted()
-"   for nr in range(1, winnr('$'))
-"     if getwinvar(nr, "&pvw") == 1
-"       return 1
-"     endif
-"   endfor
-" endfunc
-" Close quickfix/location-list if there is, otherwise, close the current buffer
-function! CloseBuffer()
-  " Get all loaded buffers
-  let buffers = filter(range(1, bufnr('$')), 'bufloaded(v:val)')
-  " Check if quickfix/location-list exists
-  let flag = 0
-  for i in buffers
-    let btype = getbufvar(i, '&buftype')
-    if btype == 'quickfix' || btype == 'location-list'
-      let flag = 1
-      break
-    endif
-  endfor
-  " If quickfix/location-list exists, close them
-  if flag == 1
-    exec 'lclose | cclose'
-  " Otherwise, close the current buffer
-  else
-    " Number of buffers exist
-    let bnum = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-    " When there is only one buffer, quit vim
-    if bnum == 1
-      exec 'quit'
-    " Otherwise, delete the current buffer
-    else
-      exec 'bd'
-    endif
-  endif
-endfunc
-
-" Map shortcut qq to call the function
-nnoremap qq :call CloseBuffer()<CR>
+" Close quickfix or location list
+nnoremap qq :windo cclose<CR>:windo lclose<CR>
 
 " ====== Function Key Mapping ======
 " Control function key mappings centralized
 "
-" nnoremap <silent><F1> :SyntasticCheck<CR> :lopen<CR>
 nnoremap <silent><F2> :Vista!!<CR>
 nnoremap <silent><F3> :call ToggleMouse()<CR>
 let g:AutoPairsShortcutToggle = '<F4>'
