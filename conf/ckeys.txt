@@ -54,7 +54,6 @@ FZF                                                                 *ckeys-fzf*
 <c-t>     : Open selected item in a new tab
 <c-x>     : Open selected item in a new horizon splitted window
 <c-v>     : Open selected item in a new vertical splitted window
-<F10>     : Open the help document for fzf-vim-commands
 <leader-w>: :Windows
 <leader-b>: :Buffers
 <leader-h>: :History
@@ -139,7 +138,7 @@ MISC                                                               *ckeys-misc*
 <F6>: toggle highligh
 <F7>: Toggle paste
 
-<qq>: close buffer with priority quickfix/location-list > normal
+<qq>: close quickfix and location list
 <gn>/<gp>/<bd>: next/previous/delete buffer
 
 <c-h>: go to the lefg split

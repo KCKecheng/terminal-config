@@ -34,7 +34,7 @@ Plug 'fatih/molokai'
 Plug 'altercation/vim-colors-solarized'
 
 " Coding
-" Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
@@ -95,9 +95,10 @@ endfunction
 set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " Close vista if it is the last buffer left
-autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsVisible() | execute "normal! :q!\<CR>" | endif
+autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
 
 " *** fzf.vim ***
+" Help - :help fzf-vim-commands
 " fzf colors
 " let g:fzf_colors =
 " \ { 'fg':      ['fg', 'Normal'],
