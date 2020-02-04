@@ -11,15 +11,17 @@ KEY MAPS~
         function keys  ............   |ckeys-funckeys|
         fzf-vim        ............   |ckeys-fzf|
         incsearch      ............   |ckeys-incsearch|
+        jedi-vim       ............   |ckeys-vimjedi|
+        vista          ............   |ckeys-vista|
         misc           ............   |ckeys-misc|
         nerdcommenter  ............   |ckeys-nerdcommenter|
         undotree       ............   |ckeys-undotree|
         vim-autoformat ............   |ckeys-autoformat|
         vim-easymotion ............   |ckeys-easymotion|
         vim-easy-align ............   |ckeys-easyalign|
+        vim-go         ............   |ckeys-vimgo|
         vim-signature  ............   |ckeys-signature|
         vim-surround   ............   |ckeys-surround|
-        vista          ............   |ckeys-Vista|
         winresizer     ............   |ckeys-winresizer|
 
 -------------------------------------------------------------------------------
@@ -47,6 +49,7 @@ NERDCOMMENTER                                             *ckeys-nerdcommenter*
 VISTA                                                             *ckeys-vista*
 
 <F2>: Toggle Vista
+<leader-t>: :Vista finder
 
 -------------------------------------------------------------------------------
 FZF                                                                 *ckeys-fzf*
@@ -79,13 +82,13 @@ INCSEARCH                                                     *ckeys-incsearch*
 -------------------------------------------------------------------------------
 VIM-EASYMOTION                                               *ckeys-easymotion*
 
-<leader-j>       : index downward
-<leader-k>       : index upward
-<leader-leader-w>: index word at the begining of each word
-<leader-leader-e>: index word at the end of each word
+<leader-j>        : index downward
+<leader-k>        : index upward
+<leader-leader-w> : index word at the begining of each word
+<leader-leader-e> : index word at the end of each word
 <leader-leader-wl>: index word at the begining of each word for current line
 <leader-leader-el>: index word at the begining of each word for current line
-<s>              : search a word and index it
+<s>               : search a word and index it
 
 -------------------------------------------------------------------------------
 CSCOPE                                                           *ckeys-cscope*
@@ -149,6 +152,16 @@ MISC                                                               *ckeys-misc*
 
 <leader-leader-s>: :Hex - horizontal split with current directory structure
 <leader-leader-v>: :Vex - vertical split with current directory structure
+
+-------------------------------------------------------------------------------
+VIM-GO                                                            *ckeys-vimgo*
+
+<c-g>: open autocomplete
+
+-------------------------------------------------------------------------------
+JEDI-VIM                                                        *ckeys-vimjedi*
+
+<c-space>: open autocomplete
 
 ===============================================================================
 vim:ft=help:et:ts=2:sw=2:sts=2:norl

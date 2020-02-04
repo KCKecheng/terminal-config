@@ -88,6 +88,7 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 
 " *** vista ***
+" Help - :help Vista
 " Options
 function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
@@ -96,6 +97,10 @@ set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " Close vista if it is the last buffer left
 autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
+" Key map
+" -------
+" Search current file
+nnoremap <leader>t :Vista finder<cr>
 
 " *** fzf.vim ***
 " Help - :help fzf-vim-commands
