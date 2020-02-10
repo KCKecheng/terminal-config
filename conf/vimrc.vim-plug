@@ -264,7 +264,7 @@ let g:ale_fixers = {
 \   'python': ['flake8']
 \}
 " E402: import not at the top
-let g:ale_python_flake8_options = '--max-line-length=120 --ignore E402,E702'
+let g:ale_python_flake8_options = '--max-line-length=120 --ignore E402,E702,W503,W504'
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
@@ -576,7 +576,7 @@ autocmd CompleteDone * pclose
 " set ai
 " Show full path of buffers
 set statusline+=%F
-set maxmempattern=2000
+set maxmempattern=2000000
 set autoread
 set hlsearch
 set encoding=utf-8
