@@ -120,6 +120,13 @@ nnoremap <leader>t :Vista finder<cr>
 "   \ 'spinner': ['fg', 'Label'],
 "   \ 'header':  ['fg', 'Comment'] }
 "
+" Options
+" Enable per-command history: CTRL-N and CTRL-P will be automatically bound to
+" next-history and previous-history instead of down and up
+if isdirectory('~/.vim/fzf') == 0
+  :silent !mkdir -p ~/.vim/fzf >/dev/null 2>&1
+endif
+let g:fzf_history_dir = '~/.vim/fzf'
 " Customized commands
 " ------
 " Command for git grep
