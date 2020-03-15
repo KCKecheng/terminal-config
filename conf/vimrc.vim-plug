@@ -56,8 +56,8 @@ Plug 'davidhalter/jedi-vim'
 Plug 'pearofducks/ansible-vim'
 
 " React JSX/javascript plugin
-" Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
 
 " HTML/XML/Jinja Plugin
 " Plug 'alvan/vim-closetag'
@@ -325,9 +325,9 @@ autocmd BufRead,BufNewFile *.yml,*.yaml set filetype=yaml.ansible
 " Options
 let g:javascript_plugin_flow = 1
 
-" *** vim-jsx ***
+" *** vim-jsx-pretty ***
 " Options
-" let g:jsx_ext_required = 0
+let g:vim_jsx_pretty_colorful_config = 1
 
 " *** vim-autoformat ***
 " Options
