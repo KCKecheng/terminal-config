@@ -24,6 +24,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " Surrounding auto complemete and modify
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+Plug 'luochen1990/rainbow'
 
 " Theme
 Plug 'vim-airline/vim-airline'
@@ -309,6 +310,11 @@ let g:ale_open_list = 1
 " Key map
 " ds/cs/ys
 " Help :help surround
+
+" *** luochen1990/rainbow ***
+" Help :help rainbow
+" Options
+let g:rainbow_active = 1
 
 " *** ansible-vim ***
 " Notes: 'set ft=yaml.ansible' if file type is not recognized automatically
