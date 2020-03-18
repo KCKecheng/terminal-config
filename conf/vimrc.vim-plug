@@ -259,6 +259,11 @@ nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" *** 'Yggdroot/indentLine' ***
+" Options
+" Do not hide quote for json
+autocmd FileType json let g:indentLine_setConceal = 0
+
 " *** ale ***
 "  Help
 "  - :ALEInfo
