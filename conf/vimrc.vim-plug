@@ -68,8 +68,8 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'pprovost/vim-ps1'
 
 " RST
-Plug 'Rykka/riv.vim'
-" Plug 'Rykka/InstantRst'
+Plug 'gu-fan/riv.vim'
+" Plug 'gu-fan/InstantRst'
 " ------ plugins enablement end -------
 
 call plug#end()
@@ -589,8 +589,12 @@ set backspace=indent,eol,start
 " *** Close preview window after autocomplete completition ***
 autocmd CompleteDone * pclose
 
+" *** Turn on spell check for markdown ***
+autocmd BufRead,BufNewFile *.md,*.rst setlocal spell
+
 " *** MISC options ***
 " set relativenumber
+" set nowrap
 " set ai
 " Show full path of buffers
 set statusline+=%F
@@ -600,4 +604,3 @@ set hlsearch
 set encoding=utf-8
 set number
 set ic
-set nowrap
