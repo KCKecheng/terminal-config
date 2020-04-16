@@ -80,6 +80,8 @@ filetype plugin indent on
 " ====== Plugin Configuration ======
 " *** nerdtree ***
 nnoremap <silent><F1> :NERDTreeToggle<CR>
+" Close nerdtree if it is the last buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " *** nerdcommenter ***
 " Help - '\' is the default leader key
