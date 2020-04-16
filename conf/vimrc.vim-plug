@@ -5,6 +5,7 @@ call plug#begin('~/.vim/plugged')
 " ------ plugins enablement begin -------
 " *** Common Plugins ***
 " Basic
+Plug 'preservim/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'simeji/winresizer'
 Plug 'mbbill/undotree'
@@ -38,6 +39,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
 Plug 'liuchengxu/vista.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'brookhong/cscope.vim'
@@ -76,6 +78,9 @@ call plug#end()
 filetype plugin indent on
 
 " ====== Plugin Configuration ======
+" *** nerdtree ***
+nnoremap <silent><F1> :NERDTreeToggle<CR>
+
 " *** nerdcommenter ***
 " Help - '\' is the default leader key
 "   [count]<Leader>cc - Comment out the current line or text selected in visual mode
@@ -456,6 +461,9 @@ nnoremap <leader><leader>v :Vex<CR>
 " *** Close Buffer ***
 " Close quickfix or location list
 nnoremap qq :windo cclose<CR>:windo lclose<CR>
+
+" *** Exit Insert Mode ***
+imap jj <Esc>
 
 " ====== Function Key Mapping ======
 " Control function key mappings centralized

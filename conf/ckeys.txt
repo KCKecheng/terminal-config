@@ -13,6 +13,7 @@ KEY MAPS~
         incsearch      ............   |ckeys-incsearch|
         jedi-vim       ............   |ckeys-vimjedi|
         vista          ............   |ckeys-vista|
+        nerdtree       ............   |ckeys-nerdtree|
         misc           ............   |ckeys-misc|
         nerdcommenter  ............   |ckeys-nerdcommenter|
         undotree       ............   |ckeys-undotree|
@@ -27,6 +28,7 @@ KEY MAPS~
 -------------------------------------------------------------------------------
 FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
 
+<F1> : Toggle nerdtree
 <F2> : Toggle vista
 <F3> : Toggle mouse mode
 <F4> : Toggle auto pairs
@@ -37,6 +39,11 @@ FUNCTION KEYS SUMMARY                                          *ckeys-funckeys*
 <F9> : Open the help document for fzf key mappings
 <F10>: Open the help document for function key mappings
 <F12>: Open this help document
+
+-------------------------------------------------------------------------------
+NERDTREE                                                       *ckeys-nerdtree*
+
+<F1>: Toggle nerdtree
 
 -------------------------------------------------------------------------------
 NERDCOMMENTER                                             *ckeys-nerdcommenter*
