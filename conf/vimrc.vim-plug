@@ -143,6 +143,7 @@ command! -bang -nargs=* GGrep
   \ call fzf#vim#grep(
   \   'git grep --line-number '.shellescape(<q-args>), 0,
   \   { 'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': '-i' }, <bang>0)
+
 " Key map
 " ------
 " Windows list
@@ -590,7 +591,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " *** Do not fold by default(only fold after nested for X times)
-set foldlevel=5
+set foldlevel=10
 
 " *** Allow erasing previously entered characters, autoindent and newlines ***
 " set backspace=2
@@ -600,7 +601,7 @@ set backspace=indent,eol,start
 autocmd CompleteDone * pclose
 
 " *** Turn on spell check for markdown ***
-autocmd BufRead,BufNewFile *.md,*.rst setlocal spell
+" autocmd BufRead,BufNewFile *.md,*.rst setlocal spell
 
 " *** MISC options ***
 " set relativenumber
