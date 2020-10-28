@@ -63,10 +63,11 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --layout=reverse --inline-info --bord
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 # Options for go module proxy
-# export GO111MODULE=on
-export GO111MODULE=auto
+export GO111MODULE=on
+# export GO111MODULE=auto
 export GOPROXY=https://goproxy.io
 # ssh connection shortcuts
-export SSHPATH="$HOME/sourcecode/misc/servers"
 # PATH
-export PATH=$GOBIN:$SSHPATH:$PATH
+export PATH=$GOBIN:$PATH
+# source $HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh
+# source $HOME/.local/bin/virtualenvwrapper.sh

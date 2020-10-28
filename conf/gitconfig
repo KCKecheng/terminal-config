@@ -3,16 +3,15 @@
   email = <email address>
 [core]
   editor = vim
-[gitreview]
-  username = kckecheng
 [merge]
   tool = vimdiff
   conflictstyle = diff3
 [http]
-	sslVerify = false
+  sslVerify = false
+[format]
+  pretty = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%aE>%Creset
+[pull]
+  rebase = false
 [credential]
   helper = cache
-[format]
-	pretty = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%aE>%Creset
-[hub]
-  protocol = https
+  useHttpPath = true
