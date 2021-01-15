@@ -183,7 +183,7 @@ function init_zprezto {
   # Add colorscheme gruvbox
   echo 'source $HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh' >> ~/.zshrc
 
-  chsh -s /usr/bin/zsh
+  sudo chsh -s /usr/bin/zsh
 
   echo "******************************************************************"
   echo "* Login agin to use zsh powered with zprezto                     *"
