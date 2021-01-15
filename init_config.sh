@@ -8,7 +8,7 @@ function arch_prepare {
   pacman -Q curl || sudo pacman -S curl
 
   # Install tmux
-  pacman -Q tmux sudo pacman -S tmux
+  pacman -Q tmux || sudo pacman -S tmux
   # Install tmuxinator
   #sudo pacman -S ruby-native-package-installer
   #gem install tmuxinator
@@ -30,6 +30,9 @@ function arch_prepare {
 
   # Install zsh
   pacman -Q zsh || sudo pacman -S zsh
+  
+  # Install vim
+  pacman -Q vim || sudo pacman -S vim
 
   # Install fasd
   pacman -Q fasd || sudo pacman -S fasd
@@ -91,6 +94,9 @@ function ubuntu_prepare {
 
   # Install zsh
   sudo apt install zsh
+  
+  # Install vim
+  sudo apt intall vim
 }
 
 function init_tmux {
@@ -229,6 +235,7 @@ fi
 if [[ -f /tmp/preparation-done ]]; then
   echo "Base OS preparation is already done"
 else
+  init_python # pip is needed for prepare stage setup
   file pacman &>/dev/null
   if [ $? -eq 0 ]; then
     # RELEASE='ARCH'
@@ -247,8 +254,6 @@ elif [[ "$INIT_T" = "zsh" ]]; then
   init_fzf
 elif [[ "$INIT_T" = "vim" ]]; then
   init_vim
-elif [[ "$INIT_T" = "python" ]]; then
-  init_python
 else
   echo "$INIT_T is not a valid option!"
   exit $ERROR_EXIT
