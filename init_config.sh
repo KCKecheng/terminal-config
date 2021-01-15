@@ -5,10 +5,10 @@ ERROR_EXIT=1
 
 function arch_prepare {
   # Install curl for file downloading
-  sudo pacman -S curl
+  pacman -Q curl || sudo pacman -S curl
 
   # Install tmux
-  sudo pacman -S tmux
+  pacman -Q tmux sudo pacman -S tmux
   # Install tmuxinator
   #sudo pacman -S ruby-native-package-installer
   #gem install tmuxinator
@@ -16,35 +16,35 @@ function arch_prepare {
   pip install tmuxp --user
 
   # Install sytax checker for syntastic
-  sudo pacman -S flake8
-  sudo pacman -S shellcheck
+  pacman -Q flake8 || sudo pacman -S flake8
+  pacman -Q shellcheck ||sudo pacman -S shellcheck
 
   # Install ripgrep for Rg command in vim-fzf
-  sudo pacman -S ripgrep
+  pacman -Q ripgrep || sudo pacman -S ripgrep
 
   # Install ctags
-  sudo pacman -S ctags
+  pacman -Q ctags || sudo pacman -S ctags
 
   # Install cscope
-  sudo pacman -S cscope
+  pacman -Q cscope || sudo pacman -S cscope
 
   # Install zsh
-  sudo pacman -S zsh
+  pacman -Q zsh || sudo pacman -S zsh
 
   # Install fasd
-  sudo pacman -S fasd
+  pacman -Q fasd || sudo pacman -S fasd
 
   # Install make, gcc, etc. for YCM compilation
-  sudo pacman -S cmake
-  sudo pacman -S make
-  sudo pacman -S gcc
+  pacman -Q cmake || sudo pacman -S cmake
+  pacman -Q make || sudo pacman -S make
+  pacman -Q gcc || sudo pacman -S gcc
 
   # Install external formatter for vim-autoformat
   # sudo pacman -S autopep8
   # sudo pacman -S python-black
   pip install --user black
-  sudo pacman -S tidy
-  sudo pacman -S npm
+  pacman -Q tidy || sudo pacman -S tidy
+  pacman -Q npm || sudo pacman -S npm
   sudo npm install -g js-beautify
   sudo npm install -g remark-cli
 
