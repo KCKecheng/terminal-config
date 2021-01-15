@@ -227,7 +227,7 @@ fi
 if [[ -f /tmp/preparation-done ]]; then
   echo "Base OS preparation is already done"
 else
-  which pacman
+  file pacman &>/dev/null
   if [ $? -eq 0 ]; then
     # RELEASE='ARCH'
     arch_prepare
