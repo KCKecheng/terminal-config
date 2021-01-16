@@ -566,7 +566,7 @@ set t_Co=256
 " colorscheme desert
 " colorscheme monokai
 " colorscheme solarized
-# colorscheme gruvbox
+" colorscheme gruvbox
 
 " *** Line/Column highlight ***
 " Highlight current line and cursor for easy alignment

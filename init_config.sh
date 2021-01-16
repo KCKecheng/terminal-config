@@ -209,7 +209,7 @@ function init_vim {
   vim "+helptags ~/.vim/doc" "+qall"
 
   # Enable gruvbox colorscheme
-  sed -i 's/# colorscheme gruvbox/colorscheme gruvbox/' ~/.vimrc
+  sed -i 's/" colorscheme gruvbox/colorscheme gruvbox/' ~/.vimrc
 }
 
 function init_zprezto {
