@@ -19,7 +19,7 @@ function arch_prepare {
   #sudo pacman -S --noconfirm ruby-native-package-installer
   #gem install tmuxinator
   # Install tmuxp
-  $PIP install tmuxp --user
+  $PIP install --user tmuxp
 
   # Install sytax checker for syntastic
   pacman -Q flake8 || sudo pacman -S --noconfirm flake8
@@ -66,13 +66,13 @@ function arch_prepare {
 }
 
 function ubuntu_prepare {
-  # Install curl for file downloading
-  dpkg -l curl || sudo apt install curl
-
   # Add PPA for vim-nox and ripgrep
   sudo add-apt-repository ppa:pi-rho/dev
   sudo add-apt-repository ppa:x4121/ripgrep
   sudo apt update
+
+  # Install curl for file downloading
+  dpkg -l curl || sudo apt install curl
 
   # Install tmux and tmux session manager(tmuxinator or tmuxp)
   dpkg -l tmux || sudo apt install -y tmux
@@ -113,19 +113,17 @@ function centos_prepare {
   # Install curl for file downloading
   rpm -q curl || sudo yum install -y curl
 
-  # Install tmux
+  # Install tmux and tmux session manager(tmuxinator or tmuxp)
   rpm -q tmux || sudo yum install -y tmux
-  # Install tmuxinator
-  #sudo yum install -y ruby-native-package-installer
-  #gem install tmuxinator
-  # Install tmuxp
-  $PIP install tmuxp --user
+  $PIP install --user tmuxp
 
   # Install sytax checker for syntastic
-  rpm -q flake8 || sudo yum install -y flake8
-  rpm -q shellcheck ||sudo yum install -y shellcheck
+  $PIP install --user flake8
+  sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/petersen/ShellCheck/repo/epel-7/petersen-ShellCheck-epel-7.repo
+  rpm -q ShellCheck || sudo yum install -y ShellCheck
 
   # Install ripgrep for Rg command in vim-fzf
+  sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
   rpm -q ripgrep || sudo yum install -y ripgrep
 
   # Install ctags
@@ -138,9 +136,10 @@ function centos_prepare {
   rpm -q zsh || sudo yum install -y zsh
 
   # Install vim
-  rpm -q vim || sudo yum install -y vim
+  rpm -q vim || sudo yum install -y vim-enhanced
 
   # Install fasd
+  sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/rdnetto/fasd/repo/fedora-33/rdnetto-fasd-fedora-33.repo
   rpm -q fasd || sudo yum install -y fasd
 
   # Install make, gcc, etc. for YCM compilation
@@ -149,20 +148,11 @@ function centos_prepare {
   rpm -q gcc || sudo yum install -y gcc
 
   # Install external formatter for vim-autoformat
-  # sudo yum install -y autopep8
-  # sudo yum install -y python-black
   $PIP install --user black
   rpm -q tidy || sudo yum install -y tidy
   rpm -q npm || sudo yum install -y npm
   sudo npm install -g js-beautify
   sudo npm install -g remark-cli
-
-  # Install shfmt
-  # sudo yum install -y base-devel
-  # sudo reboot
-  # sudo yum install -y go
-  # sudo yum install -y yaourt
-  # yaourt -S shfmt
 }
 
 function init_tmux {
@@ -289,11 +279,11 @@ function init_python {
   fi
 
   # Install ipython
-  $PIP install ipython --user
+  $PIP install --user ipython
 
   # Install virtualenvwrapper
-  $PIP install virtualenv --user
-  $PIP install virtualenvwrapper --user
+  $PIP install --user virtualenv
+  $PIP install --user virtualenvwrapper
   echo 'source $HOME/.local/bin/virtualenvwrapper.sh' >> ~/.zshrc
 }
 
@@ -320,6 +310,7 @@ else
   init_python # pip is needed for prepare stage setup
   ls /usr/bin/pacman &>/dev/null && arch_prepare
   ls /usr/bin/apt &>/dev/null && ubuntu_prepare
+  ls /usr/bin/yum &>/dev/null && centos_prepare
   touch /tmp/preparation-done
 fi
 
