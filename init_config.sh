@@ -309,9 +309,9 @@ else
 fi
 
 # pip selection - pip3 as default when it is installed
-pip3 -V && export PIP="pip3"
+pip3 -V &>/dev/null && export PIP="pip3"
 if [ "$PIP" = "" ]; then
-  pip -V && export PIP="pip"
+  pip -V &>/dev/null && export PIP="pip"
 fi
 
 if [[ -f /tmp/preparation-done ]]; then
