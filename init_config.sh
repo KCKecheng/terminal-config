@@ -110,6 +110,9 @@ function ubuntu_prepare {
 }
 
 function centos_prepare {
+  # Install util-linux-user which provides chsh
+  rpm -q util-linux-user || sudo yum install -y util-linux-user
+
   # Install curl for file downloading
   rpm -q curl || sudo yum install -y curl
 
