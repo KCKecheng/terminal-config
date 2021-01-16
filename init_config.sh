@@ -150,7 +150,7 @@ function init_vim {
   # Add customized key map documents
   mkdir ~/.vim/doc
   cp conf/ckeys.txt ~/.vim/doc
-  vim +helptags ~/.vim/doc
+  vim "+helptags ~/.vim/doc" "+qall"
 }
 
 function init_zprezto {
