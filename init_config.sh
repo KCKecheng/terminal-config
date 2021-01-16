@@ -6,60 +6,60 @@ ERROR_EXIT=1
 
 function arch_prepare {
   # Install which
-  pacman -Q which || sudo pacman -S which
+  pacman -Q which || sudo pacman -S --noconfirm which
 
   # Install curl for file downloading
-  pacman -Q curl || sudo pacman -S curl
+  pacman -Q curl || sudo pacman -S --noconfirm curl
 
   # Install tmux
-  pacman -Q tmux || sudo pacman -S tmux
+  pacman -Q tmux || sudo pacman -S --noconfirm tmux
   # Install tmuxinator
-  #sudo pacman -S ruby-native-package-installer
+  #sudo pacman -S --noconfirm ruby-native-package-installer
   #gem install tmuxinator
   # Install tmuxp
   pip install tmuxp --user
 
   # Install sytax checker for syntastic
-  pacman -Q flake8 || sudo pacman -S flake8
-  pacman -Q shellcheck ||sudo pacman -S shellcheck
+  pacman -Q flake8 || sudo pacman -S --noconfirm flake8
+  pacman -Q shellcheck ||sudo pacman -S --noconfirm shellcheck
 
   # Install ripgrep for Rg command in vim-fzf
-  pacman -Q ripgrep || sudo pacman -S ripgrep
+  pacman -Q ripgrep || sudo pacman -S --noconfirm ripgrep
 
   # Install ctags
-  pacman -Q ctags || sudo pacman -S ctags
+  pacman -Q ctags || sudo pacman -S --noconfirm ctags
 
   # Install cscope
-  pacman -Q cscope || sudo pacman -S cscope
+  pacman -Q cscope || sudo pacman -S --noconfirm cscope
 
   # Install zsh
-  pacman -Q zsh || sudo pacman -S zsh
+  pacman -Q zsh || sudo pacman -S --noconfirm zsh
 
   # Install vim
-  pacman -Q vim || sudo pacman -S vim
+  pacman -Q vim || sudo pacman -S --noconfirm vim
 
   # Install fasd
-  pacman -Q fasd || sudo pacman -S fasd
+  pacman -Q fasd || sudo pacman -S --noconfirm fasd
 
   # Install make, gcc, etc. for YCM compilation
-  pacman -Q cmake || sudo pacman -S cmake
-  pacman -Q make || sudo pacman -S make
-  pacman -Q gcc || sudo pacman -S gcc
+  pacman -Q cmake || sudo pacman -S --noconfirm cmake
+  pacman -Q make || sudo pacman -S --noconfirm make
+  pacman -Q gcc || sudo pacman -S --noconfirm gcc
 
   # Install external formatter for vim-autoformat
-  # sudo pacman -S autopep8
-  # sudo pacman -S python-black
+  # sudo pacman -S --noconfirm autopep8
+  # sudo pacman -S --noconfirm python-black
   pip install --user black
-  pacman -Q tidy || sudo pacman -S tidy
-  pacman -Q npm || sudo pacman -S npm
+  pacman -Q tidy || sudo pacman -S --noconfirm tidy
+  pacman -Q npm || sudo pacman -S --noconfirm npm
   sudo npm install -g js-beautify
   sudo npm install -g remark-cli
 
   # Install shfmt
-  # sudo pacman -S base-devel
+  # sudo pacman -S --noconfirm base-devel
   # sudo reboot
-  # sudo pacman -S go
-  # sudo pacman -S yaourt
+  # sudo pacman -S --noconfirm go
+  # sudo pacman -S --noconfirm yaourt
   # yaourt -S shfmt
 }
 
@@ -138,7 +138,7 @@ function init_vim {
 
   # Vista supports lsp which covers tags related showcase
   # # Install rst2ctags and markdown2ctags to support rst and md tags
-  # sudo pacman -S rst2ctags || sudo apt install rst2ctags
+  # sudo pacman -S --noconfirm rst2ctags || sudo apt install rst2ctags
   # pip install --user markdown2ctags
   # sudo cp ~/.local/bin/markdown2ctags /usr/local/bin/markdown2ctags.py
   #
