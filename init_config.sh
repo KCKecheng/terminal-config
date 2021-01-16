@@ -69,6 +69,10 @@ function ubuntu_prepare {
   # Add PPA for vim-nox and ripgrep
   sudo add-apt-repository ppa:pi-rho/dev
   sudo add-apt-repository ppa:x4121/ripgrep
+
+  # Change mirrors to China local mirrors
+  sudo sed -i 's#deb .*/ubuntu#deb https://mirrors.cloud.tencent.com/ubuntu#g' /etc/apt/sources.list
+  sudo sed -i 's#deb-src .*/ubuntu#deb-src https://mirrors.cloud.tencent.com/ubuntu#g' /etc/apt/sources.list
   sudo apt update
 
   # Install curl for file downloading
