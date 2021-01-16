@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname $(realpath $0))
+ABS_PATH=$(realpath "$0")
+SCRIPT_DIR=$(dirname "$ABS_PATH")
 ERROR_EXIT=1
 
 function arch_prepare {
@@ -30,7 +31,7 @@ function arch_prepare {
 
   # Install zsh
   pacman -Q zsh || sudo pacman -S zsh
-  
+
   # Install vim
   pacman -Q vim || sudo pacman -S vim
 
@@ -61,7 +62,7 @@ function arch_prepare {
 
 function ubuntu_prepare {
   # Install curl for file downloading
-  sudo apt install curl
+  dpkg -l curl || sudo apt install curl
 
   # Add PPA for vim-nox and ripgrep
   sudo add-apt-repository ppa:pi-rho/dev
@@ -69,40 +70,44 @@ function ubuntu_prepare {
   sudo apt update
 
   # Install tmux and tmux session manager(tmuxinator or tmuxp)
-  sudo apt install -y tmux
+  dpkg -l tmux || sudo apt install -y tmux
   #sudo apt install -y tmuxinator
-  sudo apt install -y tmuxp
+  dpkg -l tmuxp || sudo apt install -y tmuxp
 
   # Intall vim-nox which contains more features
-  sudo apt install -y vim-nox
+  dpkg -l vim-nox || sudo apt install -y vim-nox
 
   # Install sytax checker for syntastic
-  sudo apt install -y flake8 yamllint shellcheck
+  dpkg -l flake8 || sudo apt install -y flake8
+  dpkg -l yamllint || sudo apt install -y yamllint
+  dpkg -l shellcheck || sudo apt install -y shellcheck
 
   # Install ripgrep for Rg command in vim-fzf
-  sudo apt install ripgrep
+  dpkg -l ripgrep || sudo apt install ripgrep
 
   # Install ctags
-  sudo apt install ctags
+  dpkg -l ctags || sudo apt install ctags
 
   # Install cscope
-  sudo apt install cscope
+  dpkg -l cscope || sudo apt install cscope
 
   # Install packages for YCM language support compiling
-  sudo apt-get install build-essential cmake
-  sudo apt-get install python-dev python3-dev
+  dpkg -l build-essential || sudo apt-get install build-essential
+  dpkg -l cmake || sudo apt install cmake
+  dpkg -l python-dev | sudo apt install python-dev
+  dpkg -l python3-dev | sudo apt install python3-dev
 
   # Install zsh
-  sudo apt install zsh
-  
+  dpkg -l zsh || sudo apt install zsh
+
   # Install vim
-  sudo apt intall vim
+  dpkg -l vim || sudo apt intall vim
 }
 
 function init_tmux {
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-  cp $SCRIPT_DIR/conf/tmux.conf ~/.tmux.conf
+  cp "$SCRIPT_DIR/conf/tmux.conf" ~/.tmux.conf
 
   # echo "******************************************************************"
   # echo "* Please execute below steps after this script:                  *"
@@ -126,7 +131,7 @@ function init_vim {
   git clone https://github.com/junegunn/vim-plug.git /tmp/vim-plug
   mkdir -p ~/.vim/autoload
   cp /tmp/vim-plug/plug.vim ~/.vim/autoload/plug.vim
-  cp $SCRIPT_DIR/conf/vimrc.vim-plug ~/.vimrc
+  cp "$SCRIPT_DIR/conf/vimrc.vim-plug" ~/.vimrc
 
   # Vista supports lsp which covers tags related showcase
   # # Install rst2ctags and markdown2ctags to support rst and md tags
@@ -155,9 +160,9 @@ function init_vim {
 
 function init_zprezto {
   # Clean potential conflicts
-  rm -rf $HOME/.zprezto
-  rm -rf $HOME/.zsh*
-  rm -rf $HOME/.prezto*
+  rm -rf "$HOME/.zprezto"
+  rm -rf "$HOME"/.zsh*
+  rm -rf "$HOME"/.prezto*
 
   # Refer to https://github.com/sorin-ionescu/prezto on how to configure prezto
   # To upgrade zprezto:
@@ -165,16 +170,16 @@ function init_zprezto {
   # - manual update   : cd $ZPREZTODIR; git pull && git submodule update --init --recursive
 
   # Clone zprezto
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git $HOME/.zprezto
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
 
-  for rcfile in $HOME/.zprezto/runcoms/*; do
-    f_name=$(basename $rcfile)
+  for rcfile in "$HOME"/.zprezto/runcoms/*; do
+    f_name=$(basename "$rcfile")
     if [[ "$f_name" != "README.md" ]]; then
-      ln -s -f $rcfile $HOME/.$f_name
+      ln -s -f "$rcfile" "$HOME/.$f_name"
     fi
   done
 
-  cp $SCRIPT_DIR/conf/zpreztorc ~/.zpreztorc
+  cp "$SCRIPT_DIR/conf/zpreztorc" ~/.zpreztorc
 
   # # The highlight color won't work by default
   # echo 'export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=239"' >> ~/.zshrc
@@ -184,7 +189,7 @@ function init_zprezto {
   #
   # # Add cargo bin path where ripgrep will be installed
   # echo 'export PATH=$PATH:~/.cargo/bin' >> ~/.zshrc
-  cp $SCRIPT_DIR/conf/zshrc ~/.zshrc
+  cp "$SCRIPT_DIR/conf/zshrc" ~/.zshrc
 
   # Append tmuxinator completion
   #echo 'source $HOME/.tmux/plugins/tmuxinator/completion/tmuxinator.zsh' >> ~/.zshrc
@@ -194,7 +199,7 @@ function init_zprezto {
 
   # Change default shell as zsh for root and the current user
   sudo chsh -s /usr/bin/zsh
-  sudo chsh -s /usr/bin/zsh $USER
+  sudo chsh -s /usr/bin/zsh "$USER"
 
   echo "******************************************************************"
   echo "* Login agin to use zsh powered with zprezto                     *"
@@ -211,7 +216,7 @@ function init_fzf {
 
 function init_python {
   # Install pip
-  cd /tmp
+  cd /tmp || exit $ERROR_EXIT
   curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
   python get-pip.py --user
 
@@ -239,14 +244,8 @@ if [[ -f /tmp/preparation-done ]]; then
   echo "Base OS preparation is already done"
 else
   init_python # pip is needed for prepare stage setup
-  file pacman &>/dev/null
-  if [ $? -eq 0 ]; then
-    # RELEASE='ARCH'
-    arch_prepare
-  else
-    # RELEASE='UBUNTU'
-    ubuntu_prepare
-  fi
+  file /usr/bin/pacman &>/dev/null && arch_prepare
+  file /usr/bin/apt &>/dev/null && ubuntu_prepare
   touch /tmp/preparation-done
 fi
 
