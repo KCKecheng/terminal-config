@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH="/home/$USER/.local/bin:$PATH"
+
 ABS_PATH=$(realpath "$0")
 SCRIPT_DIR=$(dirname "$ABS_PATH")
 ERROR_EXIT=1
@@ -17,7 +19,7 @@ function arch_prepare {
   #sudo pacman -S --noconfirm ruby-native-package-installer
   #gem install tmuxinator
   # Install tmuxp
-  pip install tmuxp --user
+  $PIP install tmuxp --user
 
   # Install sytax checker for syntastic
   pacman -Q flake8 || sudo pacman -S --noconfirm flake8
@@ -49,7 +51,7 @@ function arch_prepare {
   # Install external formatter for vim-autoformat
   # sudo pacman -S --noconfirm autopep8
   # sudo pacman -S --noconfirm python-black
-  pip install --user black
+  $PIP install --user black
   pacman -Q tidy || sudo pacman -S --noconfirm tidy
   pacman -Q npm || sudo pacman -S --noconfirm npm
   sudo npm install -g js-beautify
@@ -107,6 +109,62 @@ function ubuntu_prepare {
   dpkg -l vim || sudo apt intall vim
 }
 
+function centos_prepare {
+  # Install curl for file downloading
+  rpm -q curl || sudo yum install -y curl
+
+  # Install tmux
+  rpm -q tmux || sudo yum install -y tmux
+  # Install tmuxinator
+  #sudo yum install -y ruby-native-package-installer
+  #gem install tmuxinator
+  # Install tmuxp
+  $PIP install tmuxp --user
+
+  # Install sytax checker for syntastic
+  rpm -q flake8 || sudo yum install -y flake8
+  rpm -q shellcheck ||sudo yum install -y shellcheck
+
+  # Install ripgrep for Rg command in vim-fzf
+  rpm -q ripgrep || sudo yum install -y ripgrep
+
+  # Install ctags
+  rpm -q ctags || sudo yum install -y ctags
+
+  # Install cscope
+  rpm -q cscope || sudo yum install -y cscope
+
+  # Install zsh
+  rpm -q zsh || sudo yum install -y zsh
+
+  # Install vim
+  rpm -q vim || sudo yum install -y vim
+
+  # Install fasd
+  rpm -q fasd || sudo yum install -y fasd
+
+  # Install make, gcc, etc. for YCM compilation
+  rpm -q cmake || sudo yum install -y cmake
+  rpm -q make || sudo yum install -y make
+  rpm -q gcc || sudo yum install -y gcc
+
+  # Install external formatter for vim-autoformat
+  # sudo yum install -y autopep8
+  # sudo yum install -y python-black
+  $PIP install --user black
+  rpm -q tidy || sudo yum install -y tidy
+  rpm -q npm || sudo yum install -y npm
+  sudo npm install -g js-beautify
+  sudo npm install -g remark-cli
+
+  # Install shfmt
+  # sudo yum install -y base-devel
+  # sudo reboot
+  # sudo yum install -y go
+  # sudo yum install -y yaourt
+  # yaourt -S shfmt
+}
+
 function init_tmux {
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -139,7 +197,7 @@ function init_vim {
   # Vista supports lsp which covers tags related showcase
   # # Install rst2ctags and markdown2ctags to support rst and md tags
   # sudo pacman -S --noconfirm rst2ctags || sudo apt install rst2ctags
-  # pip install --user markdown2ctags
+  # $PIP install --user markdown2ctags
   # sudo cp ~/.local/bin/markdown2ctags /usr/local/bin/markdown2ctags.py
   #
   # # Add customized lanaguages support (such as Ansible ) to ctags in order to use tagbar
@@ -222,18 +280,20 @@ function init_fzf {
 
 function init_python {
   # Install pip
-  curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-
-  # Use python3
-  python3 /tmp/get-pip.py --user
-  sudo ln -s "/home/$USER/.local/bin/pip" /usr/local/bin/
+  if [ "$PIP" = "" ]; then
+    curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
+    python3 /tmp/get-pip.py --user
+    sudo ln -s "/home/$USER/.local/bin/pip" /usr/local/bin/
+    sudo ln -s "/home/$USER/.local/bin/pip3" /usr/local/bin/
+    export PIP="pip3"
+  fi
 
   # Install ipython
-  pip install ipython --user
+  $PIP install ipython --user
 
   # Install virtualenvwrapper
-  pip install virtualenv --user
-  pip install virtualenvwrapper --user
+  $PIP install virtualenv --user
+  $PIP install virtualenvwrapper --user
   echo 'source $HOME/.local/bin/virtualenvwrapper.sh' >> ~/.zshrc
 }
 
@@ -246,6 +306,12 @@ if [[ "$#" -ne 1 ]]; then
   exit $ERROR_EXIT
 else
   INIT_T=$1
+fi
+
+# pip selection - pip3 as default when it is installed
+pip3 -V && export PIP="pip3"
+if [ "$PIP" = "" ]; then
+  pip -V && export PIP="pip"
 fi
 
 if [[ -f /tmp/preparation-done ]]; then
