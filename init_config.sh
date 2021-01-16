@@ -148,11 +148,11 @@ function centos_prepare {
   rpm -q gcc || sudo yum install -y gcc
 
   # Install external formatter for vim-autoformat
-  $PIP install --user black
-  rpm -q tidy || sudo yum install -y tidy
-  rpm -q npm || sudo yum install -y npm
-  sudo npm install -g js-beautify
-  sudo npm install -g remark-cli
+  # $PIP install --user black
+  # rpm -q tidy || sudo yum install -y tidy
+  # rpm -q npm || sudo yum install -y npm
+  # sudo npm install -g js-beautify
+  # sudo npm install -g remark-cli
 }
 
 function init_tmux {
