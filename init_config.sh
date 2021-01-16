@@ -249,8 +249,8 @@ if [[ -f /tmp/preparation-done ]]; then
   echo "Base OS preparation is already done"
 else
   init_python # pip is needed for prepare stage setup
-  file /usr/bin/pacman &>/dev/null && arch_prepare
-  file /usr/bin/apt &>/dev/null && ubuntu_prepare
+  ls /usr/bin/pacman &>/dev/null && arch_prepare
+  ls /usr/bin/apt &>/dev/null && ubuntu_prepare
   touch /tmp/preparation-done
 fi
 
