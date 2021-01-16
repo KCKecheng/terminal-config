@@ -5,6 +5,9 @@ SCRIPT_DIR=$(dirname "$ABS_PATH")
 ERROR_EXIT=1
 
 function arch_prepare {
+  # Install which
+  pacman -Q which || sudo pacman -S which
+
   # Install curl for file downloading
   pacman -Q curl || sudo pacman -S curl
 
@@ -218,7 +221,9 @@ function init_python {
   # Install pip
   cd /tmp || exit $ERROR_EXIT
   curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-  python get-pip.py --user
+
+  # Use python3
+  python3 get-pip.py --user
 
   # Install ipython
   pip install ipython --user
