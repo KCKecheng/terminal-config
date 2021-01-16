@@ -125,7 +125,7 @@ function init_vim {
   #  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   git clone https://github.com/junegunn/vim-plug.git /tmp/vim-plug
   mkdir -p ~/.vim/autoload
-  cp /tmp/vim-plug ~/.vim/autoload/plug.vim
+  cp /tmp/vim-plug/plug.vim ~/.vim/autoload/plug.vim
   cp $SCRIPT_DIR/conf/vimrc.vim-plug ~/.vimrc
 
   # Vista supports lsp which covers tags related showcase
