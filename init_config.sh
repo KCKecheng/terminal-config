@@ -66,9 +66,8 @@ function arch_prepare {
 }
 
 function ubuntu_prepare {
-  # Add PPA for vim-nox and ripgrep
-  sudo add-apt-repository ppa:pi-rho/dev
-  sudo add-apt-repository ppa:x4121/ripgrep
+  # Add vim 8 repo
+  sudo add-apt-repository ppa:jonathonf/vim
 
   # Change mirrors to China local mirrors
   sudo sed -i 's#deb .*/ubuntu#deb https://mirrors.cloud.tencent.com/ubuntu#g' /etc/apt/sources.list
@@ -83,8 +82,8 @@ function ubuntu_prepare {
   #sudo apt install -y tmuxinator
   dpkg -l tmuxp || sudo apt install -y tmuxp
 
-  # Intall vim-nox which contains more features
-  dpkg -l vim-nox || sudo apt install -y vim-nox
+  # Intall latest vim (>= 8)
+  sudo apt upgrade -y vim
 
   # Install sytax checker for syntastic
   dpkg -l flake8 || sudo apt install -y flake8
@@ -92,7 +91,10 @@ function ubuntu_prepare {
   dpkg -l shellcheck || sudo apt install -y shellcheck
 
   # Install ripgrep for Rg command in vim-fzf
-  dpkg -l ripgrep || sudo apt install ripgrep
+  dpkg -l ripgrep || {
+    curl -L https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb -o /tmp/ripgrep_12.1.1_amd64.deb
+    sudo dpkg -i /tmp/ripgrep_12.1.1_amd64.deb
+  }
 
   # Install ctags
   dpkg -l ctags || sudo apt install ctags
