@@ -219,11 +219,11 @@ function init_fzf {
 
 function init_python {
   # Install pip
-  cd /tmp || exit $ERROR_EXIT
-  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
 
   # Use python3
-  python3 get-pip.py --user
+  python3 /tmp/get-pip.py --user
+  sudo ln -s "/home/$USER/.local/bin/pip" /usr/local/bin/
 
   # Install ipython
   pip install ipython --user
