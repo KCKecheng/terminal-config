@@ -19,7 +19,7 @@ function arch_prepare {
   #sudo pacman -S --noconfirm ruby-native-package-installer
   #gem install tmuxinator
   # Install tmuxp
-  $PIP install --user tmuxp
+  # $PIP install --user tmuxp
 
   # Install sytax checker for syntastic
   pacman -Q flake8 || sudo pacman -S --noconfirm flake8
@@ -80,7 +80,7 @@ function ubuntu_prepare {
   # Install tmux and tmux session manager(tmuxinator or tmuxp)
   dpkg -l tmux || sudo apt install -y tmux
   #sudo apt install -y tmuxinator
-  dpkg -l tmuxp || sudo apt install -y tmuxp
+  # dpkg -l tmuxp || sudo apt install -y tmuxp
 
   # Intall latest vim (>= 8)
   sudo apt upgrade -y vim
@@ -124,7 +124,7 @@ function centos_prepare {
 
   # Install tmux and tmux session manager(tmuxinator or tmuxp)
   rpm -q tmux || sudo yum install -y tmux
-  $PIP install --user tmuxp
+  # $PIP install --user tmuxp
 
   # Install sytax checker for syntastic
   $PIP install --user flake8
@@ -180,8 +180,8 @@ function init_tmux {
 
   # Clone tmuxinator repo for zsh completition
   #git clone https://github.com/tmuxinator/tmuxinator.git ~/.tmux/plugins/tmuxinator
-  echo "# tmuxp completion" >> ~/.zshrc
-  echo 'which tmuxp 2>&1 >/dev/null && eval "$(compdef _tmuxp_completion tmuxp)"' >> ~/.zshrc
+  # echo "# tmuxp completion" >> ~/.zshrc
+  # echo 'which tmuxp 2>&1 >/dev/null && eval "$(compdef _tmuxp_completion tmuxp)"' >> ~/.zshrc
 }
 
 function init_vim {
