@@ -1,0 +1,418 @@
+" ====== vim-plug configuration ======
+" Refer to https://github.com/junegunn/vim-plug for details
+call plug#begin('~/.vim/plugged')
+
+" ------ plugins enablement begin -------
+" *** Common Plugins ***
+" Basic
+Plug 'preservim/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'simeji/winresizer'
+Plug 'mbbill/undotree'
+Plug 'romainl/vim-qf'
+
+" Search and navigate
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'kshenoy/vim-signature'
+Plug 'haya14busa/incsearch.vim'
+
+" Format
+Plug 'Chiel92/vim-autoformat'
+Plug 'ntpeters/vim-better-whitespace'
+" Surrounding auto complemete and modify
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'luochen1990/rainbow'
+
+" Coding
+Plug 'Yggdroot/indentLine'
+Plug 'liuchengxu/vista.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" ------ plugins enablement end -------
+
+call plug#end()
+filetype plugin indent on
+
+" ====== Plugin Configuration ======
+" *** nerdtree ***
+nnoremap <silent><F1> :NERDTreeToggle<CR>
+" Close nerdtree if it is the last buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" *** nerdcommenter ***
+" Help - '\' is the default leader key
+"   [count]<Leader>cc - Comment out the current line or text selected in visual mode
+"   [count]<leader>c<space> - Toggles the comment state of the selected line(s)
+"   [count]<leader>cu - Uncomments the selected line(s)
+" Options
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+
+" *** vista ***
+" Help - :help Vista
+" Options
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+" Close vista if it is the last buffer left
+autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
+" Key map
+" -------
+" Search current file
+nnoremap <leader>t :Vista finder<cr>
+
+" *** fzf.vim ***
+" Help - :help fzf-vim-commands
+" fzf colors
+" let g:fzf_colors =
+" \ { 'fg':      ['fg', 'Normal'],
+"   \ 'bg':      ['bg', 'Normal'],
+"   \ 'hl':      ['fg', 'Comment'],
+"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+"   \ 'hl+':     ['fg', 'Statement'],
+"   \ 'info':    ['fg', 'PreProc'],
+"   \ 'border':  ['fg', 'Ignore'],
+"   \ 'prompt':  ['fg', 'Conditional'],
+"   \ 'pointer': ['fg', 'Exception'],
+"   \ 'marker':  ['fg', 'Keyword'],
+"   \ 'spinner': ['fg', 'Label'],
+"   \ 'header':  ['fg', 'Comment'] }
+"
+" Options
+" Enable per-command history: CTRL-N and CTRL-P will be automatically bound to
+" next-history and previous-history instead of down and up
+if isdirectory('~/.vim/fzf') == 0
+  :silent !mkdir -p ~/.vim/fzf >/dev/null 2>&1
+endif
+let g:fzf_history_dir = '~/.vim/fzf'
+" Customized commands
+" ------
+" Command for git grep
+" To search the whole git repository; To search the current directory, use :Rg
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': '-i' }, <bang>0)
+
+" Key map
+" ------
+" Windows list
+nnoremap <leader>w :Windows<cr>
+" Buffer list
+nnoremap <leader>b :Buffers<cr>
+" Most recent files list
+nnoremap <leader>h :History<cr>
+" Search file names for current git repository
+nnoremap ff :GFiles<cr>
+" Search file names for current directory
+nnoremap fc :Files<cr>
+" Search lines for all loaded buffers
+nnoremap <leader>L :Lines<cr>
+" Search lines for current buffer
+nnoremap <leader>l :BLines<cr>
+" Search marks
+nnoremap <leader>m :Marks<cr>
+
+" *** undotree ***
+" Options
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffCommand = "diff -u"
+
+" *** incsearch ***
+" Key map
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+
+" *** vim-easymotion ***
+" Refer to https://github.com/easymotion/vim-easymotion
+" Default leader key \
+" Help - :help easymotion
+" Options
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1  " Case insensitive
+" Key map
+" JK motions: Line motions(consider using vim builint 'set relativenum')
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+" Multiple characters search motion
+nmap s <Plug>(easymotion-sn)
+" nmap t <Plug>(easymotion-bd-tn)
+" Word motion within current line
+" nmap <leader>w <Plug>(easymotion-bd-wl)
+" nmap <leader>e <Plug>(easymotion-bd-el)
+" Word motion
+nmap <leader><leader>w <Plug>(easymotion-bd-w)
+nmap <leader><leader>e <Plug>(easymotion-bd-e)
+nmap <leader><leader>wl <Plug>(easymotion-bd-wl)
+nmap <leader><leader>el <Plug>(easymotion-bd-el)
+
+" *** 'Yggdroot/indentLine' ***
+" Options
+" Do not hide quote for json
+autocmd FileType json let g:indentLine_setConceal = 0
+
+" *** vim-signature ***
+" Refer to https://github.com/kshenoy/vim-signature
+" Most frequently used keys
+" mx  - Toggle mark 'x'
+" dmx - Remove makr 'x'
+" m,  - Place the next available mark
+" m.  - If there is no mark, place the next available mark, remove otherwise
+" ]`  - Jump to next mark
+" ]'  - Jump to previous mark
+" m/  - Open location list and display marks from current buffer
+" m-  - Delete all marks from the current line
+" m<Space> - Delete all marks from the current buffer
+
+" *** simeji/winresizer ***
+" Key map
+" Ctrl + E, then h/j/k/l
+
+" *** tpope/vim-surround ***
+" Key map
+" ds/cs/ys
+" Help :help surround
+
+" *** luochen1990/rainbow ***
+" Help :help rainbow
+" Options
+let g:rainbow_active = 1
+
+" *** vim-autoformat ***
+" Options
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+" python options
+autocmd FileType python call SetAutoFormatPython()
+function SetAutoFormatPython()
+  let b:autoformat_autoindent = 1
+  let b:autoformat_retab = 1
+  let b:autoformat_remove_trailing_spaces = 1
+  let b:formatters_python = ['black']
+endfunction
+
+" ====== Personal Key Map Function Definition(not plugin related) ======
+"
+" *** Mouse Toggle ***
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'n'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=n
+    endif
+endfunc
+" Turn on mouse in normal mode by default
+set mouse=n
+
+" *** Paste Toggle ***
+function! TogglePaste()
+    " check if paste is enabled
+    if &paste == '1'
+        " disable paste
+        set nopaste
+    else
+        " enable paste
+        set paste
+    endif
+endfunc
+" Disable paste as inital status
+set nopaste
+
+" *** Buffer options ***
+" Ignore quickfix window when cyclying buffers
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+nnoremap bd :bd<CR>
+
+" *** view/split navigation ***
+" nnoremap ;a <C-w>h
+" nnoremap ;d <C-w>l
+" nnoremap ;w <C-w>k
+" nnoremap ;s <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-o> <C-w>w
+
+" *** horizon/vertical split ***
+" Split with current buffer
+" nnoremap <leader><leader>s <C-w>s
+" nnoremap <leader><leader>v <C-w>v
+
+" Split with new buffer
+" nnoremap <leader><leader>s :new<CR>
+" nnoremap <leader><leader>v :vnew<CR>
+nnoremap <leader><leader>s :Hex<CR>
+nnoremap <leader><leader>v :Vex<CR>
+
+" *** Close Buffer ***
+" Close quickfix or location list
+nnoremap qq :windo cclose<CR>:windo lclose<CR>
+
+" *** Exit Insert Mode ***
+imap jj <Esc>
+
+" ====== Function Key Mapping ======
+" Control function key mappings centralized
+"
+nnoremap <silent><F2> :Vista!!<CR>
+nnoremap <silent><F3> :call ToggleMouse()<CR>
+let g:AutoPairsShortcutToggle = '<F4>'
+nnoremap <silent><F5> :UndotreeToggle<CR>
+nnoremap <silent><F6> :set hlsearch! <CR>
+nnoremap <silent><F7> :call TogglePaste()<CR>
+nnoremap <silent><F8> :Autoformat<CR>
+
+" ====== Frequently used options(not plugin related) ======
+"
+" Automatically adjust quickfix window size, refer to
+" http://vim.wikia.com/wiki/Automatically_fitting_a_quickfix_window_height
+autocmd FileType qf call AdjustWindowHeight(1, 30)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+" *** Additonal file auto generation ***
+" Disable backup and undo file generation
+" set nobackup
+" set nowritebackup
+" set noundofile
+
+" *** Automatically backup ***
+if isdirectory('~/.vim/backup') == 0
+  :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+endif
+
+" set backupcopy=yes
+" set writebackup
+set backup
+set backupdir=~/.vim/backup//
+autocmd BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
+
+" *** Persistent undo ***
+if isdirectory('~/.vim/undo') == 0
+  :silent !mkdir -p ~/.vim/undo >/dev/null 2>&1
+endif
+
+set undodir=~/.vim/undo//
+set undofile
+
+" *** swp file location ***
+if isdirectory('~/.vim/swap') == 0
+  :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+endif
+
+set directory=~/.vim/swap//
+
+" *** split view to right/bottom ***
+set splitbelow
+set splitright
+
+" *** viminfo ***
+" Persist info into viminfo. Refer to :help viminfo
+" This is set as a prerequisite to make some plugins work, e.g., vim
+" bookmarks will persist(vim-signature will work after vim exit and reope)
+" Explanations:
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+" *** Restore cursor to previous position ***
+" This depends on viminfo configured above, refer to
+" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
+" *** quote/special characters(such as marks in MD, RST) auto hide ***
+" Disable double quote auto hide in json file editing
+" set conceallevel=0
+
+" *** Colors ***
+" Terminal colors
+set t_Co=256
+
+" Terminal colorscheme
+" colorscheme desert
+" colorscheme monokai
+" colorscheme solarized
+" colorscheme gruvbox
+
+" *** Line/Column highlight ***
+" Highlight current line and cursor for easy alignment
+set cursorline
+set cursorcolumn
+" Set color used for the highlight
+" Color code can be gotten with the script screen-256color.sh
+" highlight cursorline ctermbg=<color code> ctermfg=<color code>
+" highlight cursorcolumn ctermbg=<color code> ctermfg=<color code>
+
+" Source code in one line should not be longer than 80/120 x characters
+" set colorcolumn=80
+set colorcolumn=80,120
+
+" *** Tab expansion ***
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+" *** command-line completion ***
+set wildmenu
+set wildmode=list:longest,full
+
+" *** Do not fold by default(only fold after nested for X times)
+set foldlevel=10
+
+" *** Allow erasing previously entered characters, autoindent and newlines ***
+" set backspace=2
+set backspace=indent,eol,start
+
+" *** Close preview window after autocomplete completition ***
+autocmd CompleteDone * pclose
+
+" *** Turn on spell check for markdown ***
+" autocmd BufRead,BufNewFile *.md,*.rst setlocal spell
+
+" *** MISC options ***
+" set relativenumber
+" set nowrap
+" set ai
+" Show full path of buffers
+set statusline+=%F
+set maxmempattern=2000000
+set autoread
+set hlsearch
+set encoding=utf-8
+set number
+set ic
