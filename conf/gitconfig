@@ -3,6 +3,7 @@
   email = <email address>
 [core]
   editor = vim
+  quotepath = false
 [merge]
   tool = vimdiff
   conflictstyle = diff3
